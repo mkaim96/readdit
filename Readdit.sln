@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Readdit", "Readdit\Readdit.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Readdit.Domain", "Readdit.Domain\Readdit.Domain.csproj", "{32CB24A7-4947-4C8F-8207-B903489587C3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Readdit.Infrastructure", "Readdit.Infrastructure\Readdit.Infrastructure.csproj", "{41F7463F-07A0-4860-9258-6FB2C43EA562}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{32CB24A7-4947-4C8F-8207-B903489587C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32CB24A7-4947-4C8F-8207-B903489587C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{32CB24A7-4947-4C8F-8207-B903489587C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41F7463F-07A0-4860-9258-6FB2C43EA562}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41F7463F-07A0-4860-9258-6FB2C43EA562}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41F7463F-07A0-4860-9258-6FB2C43EA562}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41F7463F-07A0-4860-9258-6FB2C43EA562}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
