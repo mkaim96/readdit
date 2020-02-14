@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Readdit.Infrastructure.Ef;
 using Readdit.Domain.Models;
+using MediatR;
 
 namespace Readdit
 {
@@ -53,6 +54,8 @@ namespace Readdit
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequiredLength = 6;
             });
+
+            services.AddMediatR(typeof(ApplicationException).GetType().Assembly);
 
             services.AddControllersWithViews();
             services.AddRazorPages();
