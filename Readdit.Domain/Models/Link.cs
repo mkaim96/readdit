@@ -9,8 +9,8 @@ namespace Readdit.Domain.Models
         public int Id { get; set; }
         public string Url { get; set; }
         public string Description { get; set; }
-        public int UpVotes { get; set; }
-        public int DownVotes { get; set; }
+        public int Ups { get; set; }
+        public int Downs { get; set; }
         public ApplicationUser User { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
