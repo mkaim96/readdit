@@ -13,7 +13,7 @@ namespace Readdit.Domain.Models
         public int Downs { get; set; }
         public ApplicationUser User { get; set; }
         public DateTime CreatedAt { get; set; }
-        public DateTime UpdatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
         public IEnumerable<Comment> Comments { get; set; }
     }
 }
