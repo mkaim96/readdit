@@ -15,6 +15,7 @@ using Readdit.Infrastructure.Ef;
 using Readdit.Domain.Models;
 using MediatR;
 using System.Reflection;
+using FluentValidation.AspNetCore;
 
 namespace Readdit
 {
@@ -58,7 +59,8 @@ namespace Readdit
 
             services.AddMediatR(typeof(ApplicationDbContext).GetTypeInfo().Assembly);
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews()
+                .AddFluentValidation(cfg => cfg.RegisterValidatorsFromAssemblyContaining<ApplicationDbContext>());
             services.AddRazorPages();
         }
 
