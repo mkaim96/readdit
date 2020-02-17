@@ -12,6 +12,7 @@ using Readdit.Infrastructure.Application.Links.Commands.CreateLink;
 namespace Readdit.Controllers
 {
     [Authorize]
+    [Route("links")]
     public class LinksController : Controller
     {
         private IMediator _mediator;
@@ -22,20 +23,39 @@ namespace Readdit.Controllers
             _mediator = mediator;
             _userManager = um;
         }
-        [HttpGet]
+        [HttpGet("create")]
         public IActionResult Create()
         {
             return View();
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<IActionResult> Create(CreateLinkCommand request)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("Create", request);
+            }
+
             request.User = await _userManager.GetUserAsync(HttpContext.User);
 
-            var id = await _mediator.Send(request);
+            try
+            {
+                var id = await _mediator.Send(request);
+                return RedirectToAction(nameof(Details), new { id });
 
-            return Ok();
+            } catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return View();
+            }
+        }
+        [HttpGet]
+        [Route("details/{id}")]
+        public IActionResult Details(int id)
+        {
+            ViewData["id"] = id;
+            return View();
         }
     }
 }
