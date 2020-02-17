@@ -15,5 +15,16 @@ namespace Readdit.Domain.Models
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
         public IEnumerable<Comment> Comments { get; set; }
+
+        public Link(string url, string description, ApplicationUser user)
+        {
+            Url = url;
+            Description = description;
+            Ups = 0;
+            Downs = 0;
+            User = user;
+            CreatedAt = DateTime.Now;
+            Comments = new List<Comment>();
+        }
     }
 }
