@@ -13,5 +13,9 @@ namespace Readdit.Infrastructure.Ef
             : base(options)
         {
         }
+
+        public DbSet<Link> Links { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Vote> Votes { get; set; }
     }
 }
