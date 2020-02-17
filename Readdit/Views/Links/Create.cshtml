@@ -1,0 +1,18 @@
+﻿@model Readdit.Infrastructure.Application.Links.Commands.CreateLink.CreateLinkCommand
+
+<h1>Submit new link</h1>
+
+<form method="post" asp-action="Create" asp-controller="Links">
+    <div class="form-group">
+        <label asp-for="Url"></label>
+        <input class="form-control" asp-for="Url" />
+
+    </div>
+    <div class="form-group">
+        <label asp-for="Description"></label>
+        <input class="form-control" asp-for="Description" />
+
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+

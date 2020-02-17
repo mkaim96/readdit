@@ -14,6 +14,7 @@ using Microsoft.Extensions.Hosting;
 using Readdit.Infrastructure.Ef;
 using Readdit.Domain.Models;
 using MediatR;
+using System.Reflection;
 
 namespace Readdit
 {
@@ -55,7 +56,7 @@ namespace Readdit
                 options.Password.RequiredLength = 6;
             });
 
-            services.AddMediatR(typeof(ApplicationException).GetType().Assembly);
+            services.AddMediatR(typeof(ApplicationDbContext).GetTypeInfo().Assembly);
 
             services.AddControllersWithViews();
             services.AddRazorPages();
