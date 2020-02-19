@@ -39,16 +39,8 @@ namespace Readdit.Controllers
 
             request.User = await _userManager.GetUserAsync(HttpContext.User);
 
-            try
-            {
-                var id = await _mediator.Send(request);
-                return RedirectToAction(nameof(Details), new { id });
-
-            } catch (Exception e)
-            {
-                Console.WriteLine(e);
-                return View();
-            }
+            var id = await _mediator.Send(request);
+            return RedirectToAction(nameof(Details), new { id });
         }
         [HttpGet]
         [Route("details/{id}")]

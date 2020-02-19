@@ -25,5 +25,9 @@ namespace Readdit.Domain.Models
             CreatedAt = DateTime.Now;
             Comments = new List<Comment>();
         }
+        public Link()
+        {
+
+        }
     }
 }

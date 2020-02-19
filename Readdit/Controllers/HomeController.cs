@@ -3,26 +3,33 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Readdit.Domain.Models;
+using Readdit.Infrastructure.Application.Links.Queries.GetLinksList;
+using Readdit.Infrastructure.Dto;
 using Readdit.Models;
 
 namespace Readdit.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IMediator _mediator;
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IMediator mediator)
         {
+            _mediator = mediator;
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var links = await _mediator.Send(new GetLinksListQuery());
+
+            return View(links);
         }
 
         public IActionResult Privacy()
