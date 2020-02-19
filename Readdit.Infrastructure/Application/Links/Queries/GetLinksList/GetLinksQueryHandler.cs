@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Readdit.Infrastructure.Dto;
@@ -24,9 +25,12 @@ namespace Readdit.Infrastructure.Application.Links.Queries.GetLinksList
         }
         public async Task<ICollection<LinkDto>> Handle(GetLinksListQuery request, CancellationToken cancellationToken)
         {
-            var links = await _ctx.Links.Include(x => x.User).ToListAsync();
+            var links = await _ctx.Links
+                .Include(x => x.User)
+                .ProjectTo<LinkDto>(_mapper.ConfigurationProvider)
+                .ToListAsync();
 
-            return _mapper.Map<List<LinkDto>>(links);
+            return links;
         }
     }
 }

@@ -15,5 +15,6 @@ namespace Readdit.Infrastructure.Dto
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
         public IEnumerable<CommentDto> Comments { get; set; }
+        public int CommentsCount { get; set; }
     }
 }
