@@ -16,6 +16,8 @@ using Readdit.Domain.Models;
 using MediatR;
 using System.Reflection;
 using FluentValidation.AspNetCore;
+using AutoMapper;
+using Readdit.Infrastructure;
 
 namespace Readdit
 {
@@ -58,6 +60,7 @@ namespace Readdit
             });
 
             services.AddMediatR(typeof(ApplicationDbContext).GetTypeInfo().Assembly);
+            services.AddAutoMapper(typeof(Mappings));
 
             services.AddControllersWithViews()
                 .AddFluentValidation(cfg => cfg.RegisterValidatorsFromAssemblyContaining<ApplicationDbContext>());
