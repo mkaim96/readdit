@@ -1,0 +1,41 @@
+﻿body {
+    background: #DAE0E6;
+}
+.sidebar {
+    background: #F8F9FA;
+    max-width: 40px;
+    border-radius: 2px;
+}
+
+.post {
+    margin-left: 10px;
+    
+}
+
+.post-wrapper {
+    background: white;
+    margin-bottom: 10px;
+    border-radius: 2px;
+}
+
+.main {
+    flex-direction: column;
+    text-align: left;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.foot {
+    display: flex;
+    align-content: flex-end;
+}
+
+.no-decoration {
+    color: black;
+    text-decoration: none;
+}
+
+.no-decoration:hover {
+    text-decoration: none;
+    color: black; 
+}
