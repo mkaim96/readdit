@@ -13,5 +13,18 @@ namespace Readdit.Domain.Models
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
 
+        public Comment(string content, ApplicationUser user, Link link)
+        {
+            Content = content;
+            User = user;
+            Link = link;
+            CreatedAt = DateTime.Now;
+        }
+
+        public Comment()
+        {
+
+        }
+
     }
 }
