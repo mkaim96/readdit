@@ -19,11 +19,11 @@ namespace Readdit.Infrastructure.Application.Links.Commands.CreateLink
         }
         public async Task<int> Handle(CreateLinkCommand request, CancellationToken cancellationToken)
         {
-            var link = new Link(request.Url, request.Description);
-            link.User = request.User;
+            var link = new Link(request.Url, request.Description, request.User);
+            //link.User = request.User;
 
-            await _ctx.Links.AddAsync(link);
-            _ctx.SaveChanges();
+            _ctx.Links.Add(link);
+            await _ctx.SaveChangesAsync();
 
             return link.Id;
         }

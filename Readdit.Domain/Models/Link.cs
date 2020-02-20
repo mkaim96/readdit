@@ -16,10 +16,11 @@ namespace Readdit.Domain.Models
         public DateTime? UpdatedAt { get; set; }
         public IEnumerable<Comment> Comments { get; set; }
 
-        public Link(string url, string description)
+        public Link(string url, string description, ApplicationUser user)
         {
             Url = url;
             Description = description;
+            User = user;
             Ups = 0;
             Downs = 0;
             CreatedAt = DateTime.Now;
