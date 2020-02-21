@@ -1,8 +1,16 @@
-﻿
+﻿@model Readdit.Models.Links.DetailsViewModel
 @{
     ViewData["Title"] = "Details";
+    ViewData["LinkId"] = Model.Link.Id;
 }
 
-<h1>Details</h1>
-<h2>@ViewData["id"]</h2>
+<partial name="_linkPartial" model="@Model.Link"/>
+
+<partial name="_createCommentPartial" model="@Model.CreateComment" view-data="@ViewData"/>
+
+@foreach(var comment in Model.Link.Comments)
+{
+    <partial name="_commentPartial", model="@comment" />
+}
+
 
