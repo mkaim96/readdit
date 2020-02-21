@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Readdit.Domain.Models;
 using Readdit.Infrastructure.Application.Links.Commands.CreateLink;
+using Readdit.Infrastructure.Application.Links.Queries.GetLink;
+using Readdit.Models.Links;
 
 namespace Readdit.Controllers
 {
@@ -44,10 +46,13 @@ namespace Readdit.Controllers
         }
         [HttpGet]
         [Route("details/{id}")]
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            ViewData["id"] = id;
-            return View();
+            var link = await _mediator.Send(new GetLinkById() { Id = id });
+
+            var vm = new DetailsViewModel { Link = link };
+
+            return View(vm);
         }
     }
 }
