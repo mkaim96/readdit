@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Readdit.Infrastructure.Application.Links.Queries.GetLinksList
 {
-    public class GetLinksListQuery : IRequest<ICollection<LinkDto>>
+    public class GetLinksListQuery : IRequest<IReadOnlyList<LinkDto>>
     {
     }
 }

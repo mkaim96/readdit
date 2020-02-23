@@ -18,6 +18,8 @@ using System.Reflection;
 using FluentValidation.AspNetCore;
 using AutoMapper;
 using Readdit.Infrastructure;
+using Readdit.Domain.Interfaces;
+using Readdit.Infrastructure.Repositories;
 
 namespace Readdit
 {
@@ -58,6 +60,9 @@ namespace Readdit
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequiredLength = 6;
             });
+
+            //Add repositories
+            services.AddScoped<ILinksRepository, LinksRepository>();
 
             services.AddMediatR(typeof(ApplicationDbContext).GetTypeInfo().Assembly);
             services.AddAutoMapper(typeof(Mappings));

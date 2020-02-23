@@ -48,7 +48,7 @@ namespace Readdit.Controllers
         [Route("details/{id}")]
         public async Task<IActionResult> Details(int id)
         {
-            var link = await _mediator.Send(new GetLinkById() { Id = id });
+            var link = await _mediator.Send(new GetLinkWithDetails() { Id = id });
 
             var vm = new DetailsViewModel { Link = link };
 

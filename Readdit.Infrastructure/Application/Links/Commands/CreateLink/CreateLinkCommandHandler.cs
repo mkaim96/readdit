@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Readdit.Domain.Interfaces;
 using Readdit.Domain.Models;
 using Readdit.Infrastructure.Ef;
 using System;
@@ -11,19 +12,17 @@ namespace Readdit.Infrastructure.Application.Links.Commands.CreateLink
 {
     public class CreateLinkCommandHandler : IRequestHandler<CreateLinkCommand, int>
     {
-        private ApplicationDbContext _ctx;
+        private ILinksRepository _linksRepository;
 
-        public CreateLinkCommandHandler(ApplicationDbContext ctx)
+        public CreateLinkCommandHandler(ILinksRepository linksRepo)
         {
-            _ctx = ctx;
+            _linksRepository = linksRepo;
         }
         public async Task<int> Handle(CreateLinkCommand request, CancellationToken cancellationToken)
         {
             var link = new Link(request.Url, request.Description, request.User);
-            //link.User = request.User;
 
-            _ctx.Links.Add(link);
-            await _ctx.SaveChangesAsync();
+            await _linksRepository.Add(link);
 
             return link.Id;
         }

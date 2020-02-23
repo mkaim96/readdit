@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Readdit.Domain.Interfaces;
 using Readdit.Domain.Models;
 using Readdit.Infrastructure.Ef;
 using System;
@@ -13,11 +14,13 @@ namespace Readdit.Infrastructure.Application.Comments.Commands
 {
     public class CreateCommentCommandHandler : IRequestHandler<CreateCommentCommand, int>
     {
-        private ApplicationDbContext _ctx;
+        private ILinksRepository _linksRepository;
+        private ICommentsRepository _commentsRepository;
 
-        public CreateCommentCommandHandler(ApplicationDbContext ctx)
+        public CreateCommentCommandHandler(ILinksRepository linksRepository, ICommentsRepository commentsRepository)
         {
-            _ctx = ctx;
+            _linksRepository = linksRepository;
+            _commentsRepository = commentsRepository;
         }
 
         public async Task<int> Handle(CreateCommentCommand request, CancellationToken cancellationToken)
@@ -27,12 +30,11 @@ namespace Readdit.Infrastructure.Application.Comments.Commands
                 throw new ArgumentNullException(nameof(request.User));
             }
 
-            var link = _ctx.Links.First(x => x.Id == request.LinkId);
+            var link = await _linksRepository.GetById(request.LinkId);
 
             var comment = new Comment(request.Content, request.User, link);
 
-            _ctx.Comments.Add(comment);
-            await _ctx.SaveChangesAsync();
+            await _commentsRepository.Add(comment);
 
             return comment.Id;
         }

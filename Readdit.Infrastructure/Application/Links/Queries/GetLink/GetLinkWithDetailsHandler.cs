@@ -12,23 +12,22 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Readdit.Infrastructure.Application.Links.Queries.GetLinksList
+namespace Readdit.Infrastructure.Application.Links.Queries.GetLink
 {
-    public class GetLinksQueryHandler : IRequestHandler<GetLinksListQuery, IReadOnlyList<LinkDto>>
+    public class GetLinkWithDetailsHandler : IRequestHandler<GetLinkWithDetails, LinkDto>
     {
         private ILinksRepository _linksRepository;
         private IMapper _mapper;
 
-        public GetLinksQueryHandler(ILinksRepository linksRepo, IMapper mapper)
+        public GetLinkWithDetailsHandler(ILinksRepository linksRepo, IMapper mapper)
         {
             _linksRepository = linksRepo;
             _mapper = mapper;
         }
-        public async Task<IReadOnlyList<LinkDto>> Handle(GetLinksListQuery request, CancellationToken cancellationToken)
+        public async Task<LinkDto> Handle(GetLinkWithDetails request, CancellationToken cancellationToken)
         {
-            var links = await _linksRepository.GetAll();
-
-            return _mapper.Map<IReadOnlyList<LinkDto>>(links);
+            var link = await _linksRepository.GetLinkWithCommentsById(request.Id);
+            return _mapper.Map<LinkDto>(link);
         }
     }
 }
