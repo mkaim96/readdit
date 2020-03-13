@@ -10,5 +10,12 @@ namespace Readdit.Domain.Models
         public Link Link { get; set; }
         public ApplicationUser User { get; set; }
         public VoteType VoteType { get; set; }
+
+        public Vote(Link link, ApplicationUser user, VoteType voteType)
+        {
+            Link = link;
+            User = user;
+            VoteType = voteType;
+        }
     }
 }
