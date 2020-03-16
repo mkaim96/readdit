@@ -27,4 +27,9 @@
     <ProjectReference Include="..\Readdit.Infrastructure\Readdit.Infrastructure.csproj" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Folder Include="wwwroot\icons\" />
+  </ItemGroup>
+
 </Project>

@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Details";
     ViewData["LinkId"] = Model.Link.Id;
+    ViewData["returnUrl"] = $"/links/details/{Model.Link.Id}";
 }
 
 <partial name="_linkPartial" model="@Model.Link"/>

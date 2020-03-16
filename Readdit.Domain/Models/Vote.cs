@@ -17,5 +17,9 @@ namespace Readdit.Domain.Models
             User = user;
             VoteType = voteType;
         }
+        public Vote()
+        {
+
+        }
     }
 }

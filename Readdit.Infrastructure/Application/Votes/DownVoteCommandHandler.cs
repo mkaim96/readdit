@@ -17,6 +17,7 @@ namespace Readdit.Infrastructure.Application.Votes
         public async Task<Unit> Handle(DownVoteCommand request, CancellationToken cancellationToken)
         {
             await _votingService.DownVote(request.LinkId, request.UserId);
+            return new Unit();
         }
     }
 }

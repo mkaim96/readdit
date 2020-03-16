@@ -20,6 +20,7 @@ using AutoMapper;
 using Readdit.Infrastructure;
 using Readdit.Domain.Interfaces;
 using Readdit.Infrastructure.Repositories;
+using Readdit.Domain.Services;
 
 namespace Readdit
 {
@@ -61,8 +62,13 @@ namespace Readdit
                 options.Password.RequiredLength = 6;
             });
 
-            //Add repositories
+            //Add repositories and services
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ILinksRepository, LinksRepository>();
+            services.AddScoped<ICommentsRepository, CommentsRepository>();
+            services.AddScoped<IVotesRepository, VotesRepository>();
+            services.AddScoped<IVotingService, VotingService>();
+
 
             services.AddMediatR(typeof(ApplicationDbContext).GetTypeInfo().Assembly);
             services.AddAutoMapper(typeof(Mappings));

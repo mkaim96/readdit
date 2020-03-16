@@ -1,10 +1,10 @@
 ﻿@model Readdit.Infrastructure.Application.Comments.Commands.CreateCommentCommand
 
     <form method="post" asp-action="Create" asp-controller="Comments">
-        <input asp-for="@LinkId" hidden="hidden" , value="@ViewData["LinkId"]" />
+        <input asp-for="@Model.LinkId" hidden="hidden" , value="@ViewData["LinkId"]" />
         
         <div class="form-group">
-            <textarea class="form-control" rows="3" asp-for="@Content" placeholder="Leave a comment."></textarea>
+            <textarea class="form-control" rows="3" asp-for="@Model.Content" placeholder="Leave a comment."></textarea>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>

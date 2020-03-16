@@ -37,7 +37,7 @@ namespace Readdit.Domain.Services
                     case VoteType.Up:
                         {
                             vote.VoteType = VoteType.NonVote;
-                            link.Downs--;
+                            link.Ups--;
                             break;
                         }
                     // none vote - down
@@ -48,12 +48,14 @@ namespace Readdit.Domain.Services
                             break;
                         }
                 }
+                // TODO: Save vote and link to database
             } 
             else
             {
                 // create new down vote
                 var user = await _userRepository.GetById(userId);
                 var newVote = new Vote(link, user, VoteType.Down);
+                link.Downs++;
                 await _votesRepository.Add(newVote);
 
             }
@@ -71,7 +73,7 @@ namespace Readdit.Domain.Services
                     case VoteType.Up: return;
                     case VoteType.Down:
                         {
-                            link.Ups--;
+                            link.Downs--;
                             vote.VoteType = VoteType.NonVote;
                             break;
                         }
@@ -87,8 +89,9 @@ namespace Readdit.Domain.Services
             {
                 // create new up vote
                 var user = await _userRepository.GetById(userId);
-                var vote = new Vote(link, user, VoteType.Up);
-                await _votesRepository.Add(vote);
+                var newVote = new Vote(link, user, VoteType.Up);
+                link.Ups++;
+                await _votesRepository.Add(newVote);
             }
         }
     }

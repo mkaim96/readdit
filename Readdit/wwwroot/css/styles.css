@@ -2,9 +2,12 @@
     background: #DAE0E6;
 }
 .sidebar {
+
     background: #F8F9FA;
     max-width: 40px;
     border-radius: 2px;
+    display: flex;
+    align-items: center;
 }
 
 .post {
@@ -39,3 +42,5 @@
     text-decoration: none;
     color: black; 
 }
+
+
