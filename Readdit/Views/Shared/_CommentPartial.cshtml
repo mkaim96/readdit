@@ -1,6 +1,9 @@
 ﻿@model Readdit.Infrastructure.Dto.CommentDto
 
-<div>
-    <p>@Model.Content</p>
+<div class="container comment">
+    <div class="col-sm-10"><small><b>@Model.Author</b> @Model.CreatedAt.ToString("dd/MM/yyyy")</small></div>
+    <div class="col-sm-10">
+        <p>@Model.Content</p>
+    </div>
 </div>
 
