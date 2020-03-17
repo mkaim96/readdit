@@ -20,6 +20,11 @@ namespace Readdit.Infrastructure.Application.Links.Commands.CreateLink
         }
         public async Task<int> Handle(CreateLinkCommand request, CancellationToken cancellationToken)
         {
+            if(!request.Url.StartsWith("http://") || request.Url.StartsWith("https://"))
+            {
+                request.Url = $"http://{request.Url}";
+            }
+
             var link = new Link(request.Url, request.Description, request.User);
 
             await _linksRepository.Add(link);
