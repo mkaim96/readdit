@@ -11,5 +11,6 @@ namespace Readdit.Domain.Interfaces
         Task<bool> AlreadyVoted(int linkId, string userId);
         Task<Vote> GetByLinkId(int linkId);
         Task Add(Vote vote);
+        Task Update(Vote vote);
     }
 }

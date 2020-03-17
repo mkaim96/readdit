@@ -49,15 +49,19 @@ namespace Readdit.Domain.Services
                         }
                 }
                 // TODO: Save vote and link to database
+                await _linksRepository.Update(link);
+                await _votesRepository.Update(vote);
             } 
             else
             {
                 // create new down vote
                 var user = await _userRepository.GetById(userId);
                 var newVote = new Vote(link, user, VoteType.Down);
-                link.Downs++;
-                await _votesRepository.Add(newVote);
 
+                link.Downs++;
+
+                await _votesRepository.Add(newVote);
+                await _linksRepository.Update(link);
             }
         }
 
@@ -84,6 +88,9 @@ namespace Readdit.Domain.Services
                             break;
                         }
                 }
+
+                await _linksRepository.Update(link);
+                await _votesRepository.Update(vote);
             }
             else
             {
@@ -92,6 +99,7 @@ namespace Readdit.Domain.Services
                 var newVote = new Vote(link, user, VoteType.Up);
                 link.Ups++;
                 await _votesRepository.Add(newVote);
+                await _linksRepository.Update(link);
             }
         }
     }

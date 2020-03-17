@@ -34,5 +34,10 @@ namespace Readdit.Infrastructure.Repositories
         {
             return await _context.Votes.FirstAsync(x => x.Link.Id == id);
         }
+
+        public async Task Update(Vote vote)
+        {
+            await _context.SaveChangesAsync();
+        }
     }
 }

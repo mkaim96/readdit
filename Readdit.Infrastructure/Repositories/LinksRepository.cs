@@ -43,5 +43,10 @@ namespace Readdit.Infrastructure.Repositories
         {
             return await _context.Links.FindAsync(id);
         }
+
+        public async Task Update(Link link)
+        {
+            await _context.SaveChangesAsync();
+        }
     }
 }

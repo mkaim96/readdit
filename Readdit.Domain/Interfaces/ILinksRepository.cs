@@ -12,5 +12,6 @@ namespace Readdit.Domain.Interfaces
         Task<IReadOnlyList<Link>> GetAll();
         Task<Link> GetLinkWithCommentsById(int id);
         Task<Link> GetById(int id);
+        Task Update(Link link);
     }
 }
