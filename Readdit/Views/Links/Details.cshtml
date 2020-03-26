@@ -9,6 +9,11 @@
 
 <partial name="_createCommentPartial" model="@Model.CreateComment" view-data="@ViewData"/>
 
+<br /> <br />
+
+<h5>Comments (@Model.Link.CommentsCount)</h5>
+
+
 @foreach(var comment in Model.Comments)
 {
     <partial name="_commentPartial", model="@comment" />
