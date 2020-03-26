@@ -25,7 +25,8 @@ namespace Readdit.Infrastructure.Application.Links.Queries.GetLink
             _linksRepository = linksRepo;
             _mapper = mapper;
         }
-        public async Task<(LinkDto link, IReadOnlyList<CommentDto> comments)> Handle(GetLinkWithDetails request, CancellationToken cancellationToken)
+        public async Task<(LinkDto link, IReadOnlyList<CommentDto> comments)> Handle(GetLinkWithDetails request,
+                CancellationToken cancellationToken)
         {
             var link = await _linksRepository.GetLinkWithCommentsById(request.Id);
 
