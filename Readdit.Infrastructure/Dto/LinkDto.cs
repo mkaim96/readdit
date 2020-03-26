@@ -14,7 +14,6 @@ namespace Readdit.Infrastructure.Dto
         public string Author { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
-        public IEnumerable<CommentDto> Comments { get; set; } = new List<CommentDto>();
         public int CommentsCount { get; set; }
     }
 }

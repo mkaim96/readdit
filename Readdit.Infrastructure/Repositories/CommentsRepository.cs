@@ -18,7 +18,8 @@ namespace Readdit.Infrastructure.Repositories
         }
         public async Task<Comment> Add(Comment comment)
         {
-            await _context.AddAsync(comment);
+            await _context.Comments.AddAsync(comment);
+            await _context.SaveChangesAsync();
             return comment;
         }
     }

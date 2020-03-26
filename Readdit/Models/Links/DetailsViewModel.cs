@@ -10,6 +10,7 @@ namespace Readdit.Models.Links
     public class DetailsViewModel
     {
         public LinkDto Link { get; set; }
+        public IReadOnlyList<CommentDto> Comments { get; set; }
         public CreateCommentCommand CreateComment { get; set; }
     }
 }

@@ -9,7 +9,7 @@
 
 <partial name="_createCommentPartial" model="@Model.CreateComment" view-data="@ViewData"/>
 
-@foreach(var comment in Model.Link.Comments)
+@foreach(var comment in Model.Comments)
 {
     <partial name="_commentPartial", model="@comment" />
 }

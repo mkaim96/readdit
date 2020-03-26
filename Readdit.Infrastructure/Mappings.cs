@@ -13,8 +13,7 @@ namespace Readdit.Infrastructure
         public Mappings()
         {
             CreateMap<Link, LinkDto>()
-                .ForMember(dest => dest.Author, opt => opt.MapFrom(src => src.User.UserName))
-                .ForMember(dest => dest.CommentsCount, opt => opt.MapFrom(src => src.Comments.Count()));
+                .ForMember(dest => dest.Author, opt => opt.MapFrom(src => src.User.UserName));
 
             CreateMap<Comment, CommentDto>()
                 .ForMember(dest => dest.Author, opt => opt.MapFrom(src => src.User.UserName));

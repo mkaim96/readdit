@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Readdit.Infrastructure.Application.Links.Queries.GetLink
 {
-    public class GetLinkWithDetails : IRequest<LinkDto>
+    public class GetLinkWithDetails : IRequest<(LinkDto link, IReadOnlyList<CommentDto> commests)>
     {
         public int Id { get; set; }
     }
