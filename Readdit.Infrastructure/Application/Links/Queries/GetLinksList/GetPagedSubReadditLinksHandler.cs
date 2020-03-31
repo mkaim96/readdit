@@ -1,8 +1,5 @@
-﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using MediatR;
+﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Readdit.Domain.Interfaces;
 using Readdit.Infrastructure.Dto;
 using Readdit.Infrastructure.Ef;
 using System;
@@ -14,19 +11,21 @@ using System.Threading.Tasks;
 
 namespace Readdit.Infrastructure.Application.Links.Queries.GetLinksList
 {
-    public class GetLinksQueryHandler : IRequestHandler<GetLinksListQuery, IReadOnlyList<LinkDto>>
+    public class GetSubReadditLinksHandler : IRequestHandler<GetPagedSubReadditLinks, IReadOnlyList<LinkDto>>
     {
-        private ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
+        int _take;
 
-        public GetLinksQueryHandler(ApplicationDbContext context)
+        public GetSubReadditLinksHandler(ApplicationDbContext context)
         {
             _context = context;
+            _take = 2;
         }
-        public async Task<IReadOnlyList<LinkDto>> Handle(GetLinksListQuery request, CancellationToken cancellationToken)
+        public async Task<IReadOnlyList<LinkDto>> Handle(GetPagedSubReadditLinks request, CancellationToken cancellationToken)
         {
+            int skip = (request.Page - 1) * _take;
             var links = await _context.Links
-                .Include(x => x.User)
-                .Include(x => x.Comments)
+                .Where(x => x.SubReaddit.Id == request.SubReadditId)
                 .Select(x => new LinkDto
                 {
                     Id = x.Id,
@@ -37,7 +36,10 @@ namespace Readdit.Infrastructure.Application.Links.Queries.GetLinksList
                     Author = x.User.UserName,
                     CreatedAt = x.CreatedAt,
                     CommentsCount = x.Comments.Count()
-                }).ToListAsync();
+                })
+                .Skip(skip)
+                .Take(_take)
+                .ToListAsync();
 
             return links.AsReadOnly();
         }

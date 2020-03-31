@@ -14,9 +14,10 @@ namespace Readdit.Domain.Models
         public ApplicationUser User { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
+        public SubReaddit? SubReaddit { get; set; }
         public IEnumerable<Comment> Comments { get; set; }
 
-        public Link(string url, string description, ApplicationUser user)
+        public Link(string url, string description, ApplicationUser user, SubReaddit sub = null)
         {
             Url = url;
             Description = description;
@@ -25,6 +26,7 @@ namespace Readdit.Domain.Models
             Downs = 0;
             CreatedAt = DateTime.Now;
             Comments = new List<Comment>();
+            SubReaddit = sub;
         }
         public Link()
         {
