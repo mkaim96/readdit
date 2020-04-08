@@ -11,6 +11,7 @@ using Readdit.Domain.Models;
 using Readdit.Infrastructure.Application.Links.Queries.GetLinksList;
 using Readdit.Infrastructure.Dto;
 using Readdit.Models;
+using Readdit.Models.Links;
 
 namespace Readdit.Controllers
 {
@@ -29,7 +30,9 @@ namespace Readdit.Controllers
         {
             var links = await _mediator.Send(new GetPagedLinkList { Page = page});
 
-            return View(links);
+            var vm = new IndexViewModel { Links = links, NextPage = page + 1 };
+
+            return View(vm);
         }
 
         public IActionResult Privacy()
