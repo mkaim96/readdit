@@ -1,13 +1,14 @@
-﻿@using Readdit.Infrastructure.Dto
-@model IReadOnlyList<LinkDto>
+﻿@using Readdit.Models.Links
+@model IndexViewModel
 @{
     ViewData["Title"] = "Home Page";
     ViewData["ReturnUrl"] = "/";
 }
 
 <div class="text-center">
-    @foreach(var link in Model)
+    @foreach(var link in Model.Links)
     {
         <partial name="_linkPartial", model="@link" view-data="ViewData"/>
     }
+    <a asp-action="Index" asp-controller="Home" asp-route-page="@Model.NextPage">Next page</a>
 </div>
