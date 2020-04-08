@@ -42,6 +42,7 @@ namespace Readdit.Infrastructure.Application.Links.Queries.GetLinksList
                     CreatedAt = x.CreatedAt,
                     CommentsCount = x.Comments.Count()
                 })
+                .OrderByDescending(x => x.Ups - x.Downs)
                 .Skip(skip)
                 .Take(_take)
                 .ToListAsync();
