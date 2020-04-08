@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Readdit.Domain.Interfaces;
 using Readdit.Infrastructure.Dto;
 using Readdit.Infrastructure.Ef;
 using System.Collections.Generic;
@@ -28,7 +27,6 @@ namespace Readdit.Infrastructure.Application.Links.Queries.GetLinksList
             // Page = 2, Take = 5; skip = 1 * 5 = 5; skip first five
             // Page = 3, Take = 5; skip = 2 * 5 = 10; skip first ten, itd
             int skip = (request.Page - 1) * _take;
-
 
             var links = await _context.Links
                 .Select(x => new LinkDto
