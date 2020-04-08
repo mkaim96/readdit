@@ -8,7 +8,7 @@ namespace Readdit.Infrastructure.Application.Links.Queries.GetLinksList
 {
     public class GetPagedSubReadditLinks : IRequest<IReadOnlyList<LinkDto>>
     {
-        public int SubReadditId { get; set; }
+        public string SubReadditName { get; set; }
         public int Page { get; set; }
     }
 }
