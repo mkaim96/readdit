@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
 
-namespace Readdit.Infrastructure.Application.SubReaddit.Commands.CreateSubReaddit
+namespace Readdit.Infrastructure.Application.SubReaddits.Commands.CreateSubReaddit
 {
     public class CreateSubReadditCommand : IRequest<int>
     {
