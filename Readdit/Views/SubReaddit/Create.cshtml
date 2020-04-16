@@ -1,0 +1,11 @@
+﻿@model Readdit.Infrastructure.Application.SubReaddits.Commands.CreateSubReaddit.CreateSubReadditCommand
+
+<h3>Create new community</h3>
+
+<form method="post" asp-action="Create" asp-controller="SubReaddit">
+    <div class="form-group">
+        <label asp-for="@Model.Name"></label>
+        <input asp-for="@Model.Name" />
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

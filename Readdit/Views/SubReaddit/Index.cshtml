@@ -1,0 +1,40 @@
+﻿@model Readdit.Models.SubReaddits.IndexViewModel
+@{
+    ViewData["Title"] = "Communities";
+}
+
+<div class="container">
+    <div class="row">
+
+        <div class="col-sm-6">
+            <label>Search for communities: </label>
+            <form>
+                <div class="form-inline">
+                    <input /> <button class="btn btn-primary">Search</button>
+                </div>
+            </form>
+        <a asp-action="Create" asp-controller="SubReaddit">Create new community</a>
+        </div>
+        @if(Model.SearchResults.Count != 0)
+        {
+            <ul>
+                @foreach (var sub in Model.SearchResults)
+                {
+                    <li><a>@sub.Name</a></li>
+                }
+            </ul>
+        }
+
+
+        <div class="col-sm-6">
+            <h4>Popular</h4>
+            <ul>
+                @foreach(var sub in Model.Popular)
+                {
+                    <li><a>@sub.Name</a></li>
+
+                }
+            </ul>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,15 @@
+﻿@model Readdit.Models.SubReaddits.SubLinksViewModel
+@{
+    ViewData["Title"] = "SubLinks";
+}
+
+<h3>@Model.SubReadditName</h3>
+
+<div class="text-center">
+    @foreach (var link in Model.Links)
+    {
+        <partial name="_linkPartial" , model="@link" view-data="ViewData" />
+    }
+    <a asp-action="GetLinks" asp-controller="SubReaddit" asp-route-page="@Model.NextPage">Next page</a>
+</div>
+

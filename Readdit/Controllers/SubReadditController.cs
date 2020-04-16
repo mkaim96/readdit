@@ -5,7 +5,11 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Readdit.Infrastructure.Application.Links.Queries.GetLinksList;
-using Readdit.Infrastructure.Application.SubReaddit.Commands.CreateSubReaddit;
+using Readdit.Infrastructure.Application.SubReaddit.Queries.GetPopular;
+using Readdit.Infrastructure.Application.SubReaddit.Queries.Search;
+using Readdit.Infrastructure.Application.SubReaddits.Commands.CreateSubReaddit;
+using Readdit.Infrastructure.Dto;
+using Readdit.Models.SubReaddits;
 
 namespace Readdit.Controllers
 {
@@ -18,12 +22,37 @@ namespace Readdit.Controllers
         {
             _mediator = mediator;
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Index(string search = "")
+        {
+            var searched = new List<SubReadditDto>();
+            if(!(search.Length == 0))
+            {
+                var x = await _mediator.Send(new SearchSubReaddits { SearchString = search });
+                searched = x.ToList();
+            }
+            var popular = await _mediator.Send(new GetPopularSubReaddits());
+
+            var vm = new IndexViewModel { Popular = popular, SearchResults = searched.AsReadOnly() };
+
+            return View("Index", vm);
+        }
+
         [HttpGet]
         [Route("{subReadditName}")]
-        public async Task<IActionResult> GetSubReadditLinks(string subReadditName, int page = 1)
+        public async Task<IActionResult> GetLinks(string subReadditName, int page = 1)
         {
             var links = await _mediator.Send(new GetPagedSubReadditLinks { Page = page, SubReadditName = subReadditName });
-            return View("Index", links);
+            var vm = new SubLinksViewModel
+            {
+                SubReadditName = subReadditName,
+                Links = links,
+                NextPage = page + 1,
+                PreviousPage = page - 1
+            };
+
+            return View("SubLinks", vm);
         }
 
         [HttpGet]
