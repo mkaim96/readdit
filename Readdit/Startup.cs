@@ -68,6 +68,7 @@ namespace Readdit
             services.AddScoped<ICommentsRepository, CommentsRepository>();
             services.AddScoped<IVotesRepository, VotesRepository>();
             services.AddScoped<IVotingService, VotingService>();
+            services.AddScoped<ISubReadditRepository, SubReadditRepository>();
 
 
             services.AddMediatR(typeof(ApplicationDbContext).GetTypeInfo().Assembly);
