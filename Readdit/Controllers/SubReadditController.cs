@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Readdit.Domain.Models;
@@ -28,19 +29,28 @@ namespace Readdit.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(string search = "")
+        public async Task<IActionResult> Index()
         {
-            var searched = new List<SubReadditDto>();
-            if(!(search.Length == 0))
-            {
-                var x = await _mediator.Send(new SearchSubReaddits { SearchString = search });
-                searched = x.ToList();
-            }
             var popular = await _mediator.Send(new GetPopularSubReaddits());
 
-            var vm = new IndexViewModel { Popular = popular, SearchResults = searched.AsReadOnly() };
+            var vm = new IndexViewModel
+            {
+                Popular = popular, SearchResults = new List<SubReadditDto>().AsReadOnly() 
+            };
 
             return View("Index", vm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult>SearchSubReaddits(IFormCollection form)
+        {
+            var vm = new IndexViewModel
+            {
+                Popular = await _mediator.Send(new GetPopularSubReaddits()),
+                SearchResults = await _mediator.Send(new SearchSubReaddits { SearchString = form["search"] })
+            };
+
+            return View(nameof(Index), vm);
         }
 
         [HttpGet]

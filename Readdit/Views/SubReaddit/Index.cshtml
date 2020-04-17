@@ -8,9 +8,9 @@
 
         <div class="col-sm-6">
             <label>Search for communities: </label>
-            <form>
+            <form method="post" asp-action="SearchSubReaddits" asp-controller="SubReaddit">
                 <div class="form-inline">
-                    <input /> <button class="btn btn-primary">Search</button>
+                    <input name="search"/> <button type="submit" class="btn btn-primary">Search</button>
                 </div>
             </form>
         <a asp-action="Create" asp-controller="SubReaddit">Create new community</a>
