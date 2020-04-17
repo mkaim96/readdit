@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Readdit.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,5 +10,6 @@ namespace Readdit.Infrastructure.Application.SubReaddits.Commands.CreateSubReadd
     public class CreateSubReadditCommand : IRequest<int>
     {
         public string Name { get; set; }
+        public ApplicationUser User { get; set; }
     }
 }

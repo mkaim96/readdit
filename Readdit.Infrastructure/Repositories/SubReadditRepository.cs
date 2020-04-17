@@ -18,6 +18,15 @@ namespace Readdit.Infrastructure.Repositories
         {
             _context = context;
         }
+
+        public async Task<SubReaddit> Add(SubReaddit subReaddit)
+        {
+            await _context.SubReaddits.AddAsync(subReaddit);
+            await _context.SaveChangesAsync();
+            return subReaddit;
+
+        }
+
         public async Task<IReadOnlyCollection<SubReaddit>> GetPopular()
         {
             return await _context.SubReaddits.ToListAsync();

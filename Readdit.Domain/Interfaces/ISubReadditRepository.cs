@@ -10,5 +10,6 @@ namespace Readdit.Domain.Interfaces
     {
         Task<IReadOnlyCollection<SubReaddit>> Search(string search);
         Task<IReadOnlyCollection<SubReaddit>> GetPopular();
+        Task<SubReaddit> Add(SubReaddit subReaddit);
     }
 }

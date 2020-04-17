@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Readdit.Domain.Models;
 using Readdit.Infrastructure.Application.Links.Queries.GetLinksList;
 using Readdit.Infrastructure.Application.SubReaddit.Queries.GetPopular;
 using Readdit.Infrastructure.Application.SubReaddit.Queries.Search;
@@ -17,10 +19,12 @@ namespace Readdit.Controllers
     public class SubReadditController : Controller
     {
         private readonly IMediator _mediator;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public SubReadditController(IMediator mediator)
+        public SubReadditController(IMediator mediator, UserManager<ApplicationUser> um)
         {
             _mediator = mediator;
+            _userManager = um;
         }
 
         [HttpGet]
@@ -66,7 +70,9 @@ namespace Readdit.Controllers
         [Route("create")]
         public async Task<IActionResult> Create(CreateSubReadditCommand request)
         {
+            request.User = await _userManager.GetUserAsync(HttpContext.User);
             var subId = await _mediator.Send(request);
+
             return View("SubReaddit", subId);
         }
     }

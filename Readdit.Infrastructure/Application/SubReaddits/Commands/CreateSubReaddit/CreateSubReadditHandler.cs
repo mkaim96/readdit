@@ -6,22 +6,23 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Readdit.Domain.Models;
+using Readdit.Domain.Interfaces;
 
 namespace Readdit.Infrastructure.Application.SubReaddits.Commands.CreateSubReaddit
 {
     class CreateSubReadditHandler : IRequestHandler<CreateSubReadditCommand, int>
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ISubReadditRepository _subReadditRepository;
 
-        public CreateSubReadditHandler(ApplicationDbContext context)
+        public CreateSubReadditHandler(ISubReadditRepository subReadditRepository)
         {
-            _context = context;
+            _subReadditRepository = subReadditRepository;
         }
 
         public async Task<int> Handle(CreateSubReadditCommand request, CancellationToken cancellationToken)
         {
-            var subR = new Domain.Models.SubReaddit(request.Name);
-            await _context.AddAsync(subR);
+            var subR = new Domain.Models.SubReaddit(request.Name, request.User);
+            await _subReadditRepository.Add(subR);
 
             return subR.Id;
         }
