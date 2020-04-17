@@ -296,7 +296,12 @@ namespace Readdit.Infrastructure.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("SubReaddits");
                 });
@@ -396,6 +401,13 @@ namespace Readdit.Infrastructure.Migrations
 
                     b.HasOne("Readdit.Domain.Models.ApplicationUser", "User")
                         .WithMany("Links")
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("Readdit.Domain.Models.SubReaddit", b =>
+                {
+                    b.HasOne("Readdit.Domain.Models.ApplicationUser", "User")
+                        .WithMany()
                         .HasForeignKey("UserId");
                 });
 
