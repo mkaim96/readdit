@@ -27,6 +27,11 @@ namespace Readdit.Infrastructure.Repositories
 
         }
 
+        public async Task<SubReaddit> GetById(int id)
+        {
+            return await _context.SubReaddits.FindAsync(id);
+        }
+
         public async Task<IReadOnlyCollection<SubReaddit>> GetPopular()
         {
             return await _context.SubReaddits.ToListAsync();

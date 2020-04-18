@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Readdit.Models.SubReaddits
 {
-    public class SubLinksViewModel
+    public class SubReadditViewModel
     {
         public IReadOnlyList<LinkDto> Links { get; set; }
         public string SubReadditName { get; set; }
