@@ -1,9 +1,15 @@
-﻿@model Readdit.Models.SubReaddits.SubLinksViewModel
+﻿@model Readdit.Models.SubReaddits.SubReadditViewModel
 @{
     ViewData["Title"] = "SubLinks";
+    ViewData["returnUrl"] = $"/sub/{Model.SubReadditId}/{Model.SubReadditName}";
 }
 
 <h3>@Model.SubReadditName</h3>
+<a 
+   asp-action="CreateLink"
+   asp-controller="SubReaddit"
+   asp-route-id="@Model.SubReadditId"
+   asp-route-subReadditName="@Model.SubReadditName">Submit a link to this community</a>
 
 <div class="text-center">
     @foreach (var link in Model.Links)

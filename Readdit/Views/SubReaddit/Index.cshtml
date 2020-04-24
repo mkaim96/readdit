@@ -10,28 +10,38 @@
             <label>Search for communities: </label>
             <form method="post" asp-action="SearchSubReaddits" asp-controller="SubReaddit">
                 <div class="form-inline">
-                    <input name="search"/> <button type="submit" class="btn btn-primary">Search</button>
+                    <input name="search" /> <button type="submit" class="btn btn-primary">Search</button>
                 </div>
             </form>
-        <a asp-action="Create" asp-controller="SubReaddit">Create new community</a>
+            <a asp-action="Create" asp-controller="SubReaddit">Create new community</a>
+            @if (Model.SearchResults.Count != 0)
+            {
+                <ul>
+                    @foreach (var sub in Model.SearchResults)
+                    {
+                        <li>
+                            <a asp-action="GetLinks"
+                               asp-controller="SubReaddit"
+                               asp-route-id="@sub.Id"
+                               asp-route-subReadditName="@sub.Name">
+                                @sub.Name
+                            </a>
+                        </li>
+                    }
+                </ul>
+            }
         </div>
-        @if(Model.SearchResults.Count != 0)
-        {
-            <ul>
-                @foreach (var sub in Model.SearchResults)
-                {
-                    <li><a>@sub.Name</a></li>
-                }
-            </ul>
-        }
-
 
         <div class="col-sm-6">
             <h4>Popular</h4>
             <ul>
                 @foreach(var sub in Model.Popular)
                 {
-                    <li><a>@sub.Name</a></li>
+                    <li><a asp-action="GetLinks"
+                           asp-controller="SubReaddit"
+                           asp-route-id="@sub.Id"
+                           asp-route-subReadditName="@sub.Name">
+                        @sub.Name</a></li>
 
                 }
             </ul>
