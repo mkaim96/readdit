@@ -17,21 +17,28 @@ namespace Readdit.Infrastructure.Application.Links.Queries.GetLink
 {
     public class GetLinkWithDetailsHandler : IRequestHandler<GetLinkWithDetails, (LinkDto link, IReadOnlyList<CommentDto> comments)>
     {
+        private ApplicationDbContext _context;
         private ILinksRepository _linksRepository;
         private IMapper _mapper;
 
-        public GetLinkWithDetailsHandler(ILinksRepository linksRepo, IMapper mapper)
+        public GetLinkWithDetailsHandler(ApplicationDbContext context, IMapper mapper)
         {
-            _linksRepository = linksRepo;
+            _context = context;
             _mapper = mapper;
         }
         public async Task<(LinkDto link, IReadOnlyList<CommentDto> comments)> Handle(GetLinkWithDetails request,
                 CancellationToken cancellationToken)
         {
-            var link = await _linksRepository.GetLinkWithCommentsById(request.Id);
+            var linkDto = await _context.Links
+                .ProjectTo<LinkDto>(_mapper.ConfigurationProvider)
+                .FirstAsync(x => x.Id == request.Id);
 
-            var linkDto = _mapper.Map<Link, LinkDto>(link);
-            var commentsDto = _mapper.Map<List<Comment>, List<CommentDto>>(link.Comments.ToList());
+            var commentsDto = await _context.Comments
+                .Where(x => x.Link.Id == request.Id)
+                .ProjectTo<CommentDto>(_mapper.ConfigurationProvider)
+                .ToListAsync();
+            
+               
 
             return (linkDto, commentsDto.AsReadOnly());
         }
