@@ -106,6 +106,7 @@ namespace Readdit.Controllers
         public async Task<ActionResult> CreateLink(CreateLinkCommand request, int id, string subReadditName)
         {
             request.SubReadditId = id;
+            request.User = await _userManager.GetUserAsync(HttpContext.User);
             await _mediator.Send(request);
 
             return RedirectToAction("GetLinks", new { id, subReadditName }); 
