@@ -9,8 +9,6 @@ namespace Readdit.Domain.Interfaces
     public interface ILinksRepository
     {
         Task<Link> Add(Link link);
-        Task<IReadOnlyList<Link>> GetAll();
-        Task<Link> GetLinkWithCommentsById(int id);
         Task<Link> GetById(int id);
         Task Update(Link link);
     }

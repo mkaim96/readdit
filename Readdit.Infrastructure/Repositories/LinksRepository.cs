@@ -24,21 +24,6 @@ namespace Readdit.Infrastructure.Repositories
             return link;
         }
 
-        public async Task<IReadOnlyList<Link>> GetAll()
-        {
-            return await _context.Links
-                .Include(x => x.User)
-                .ToListAsync();
-        }
-
-        public async Task<Link> GetLinkWithCommentsById(int id)
-        {
-            return await _context.Links
-                .Include(x => x.Comments).ThenInclude(x => x.User)
-                .Include(x => x.User)
-                .FirstAsync(x => x.Id == id);
-        }
-
         public async Task<Link> GetById(int id)
         {
             return await _context.Links.FindAsync(id);
