@@ -27,6 +27,11 @@ namespace Readdit.Infrastructure.Repositories
 
         }
 
+        public async Task<bool> Exists(string name)
+        {
+           return await _context.SubReaddits.AnyAsync(x => x.Name == name);
+        }
+
         public async Task<SubReaddit> GetById(int id)
         {
             return await _context.SubReaddits.FindAsync(id);

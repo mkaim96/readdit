@@ -21,7 +21,7 @@ namespace Readdit.Infrastructure.Application.SubReaddits.Commands.CreateSubReadd
 
         public async Task<int> Handle(CreateSubReadditCommand request, CancellationToken cancellationToken)
         {
-            var subR = new Domain.Models.SubReaddit(request.Name, request.User);
+            var subR = new Domain.Models.SubReaddit(request.Name, request.User, request.Description);
             await _subReadditRepository.Add(subR);
 
             return subR.Id;

@@ -5,12 +5,12 @@
 <form method="post" asp-action="Create" asp-controller="Links">
     <div class="form-group row">
         <label asp-for="Url"></label>
-        <span class="badge badge-danger" asp-validation-for="Url"></span>
+        <span class="text-danger" asp-validation-for="Url"></span>
         <input class="form-control" asp-for="Url" />
     </div>
     <div class="form-group row">
         <label asp-for="Description"></label>
-        <span class="badge badge-danger" asp-validation-for="Description"></span>
+        <span class="text-danger" asp-validation-for="Description"></span>
         <input class="form-control" asp-for="Description" />
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>

@@ -10,6 +10,7 @@ namespace Readdit.Infrastructure.Application.SubReaddits.Commands.CreateSubReadd
     public class CreateSubReadditCommand : IRequest<int>
     {
         public string Name { get; set; }
+        public string Description { get; set; }
         public ApplicationUser User { get; set; }
     }
 }

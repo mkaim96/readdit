@@ -56,6 +56,11 @@ namespace Readdit.Controllers
         [Route("create")]
         public async Task<IActionResult> Create(CreateSubReadditCommand request)
         {
+            if(!ModelState.IsValid)
+            {
+                return View(request);
+            }
+
             request.User = await _userManager.GetUserAsync(HttpContext.User);
             var subId = await _mediator.Send(request);
 
@@ -105,6 +110,12 @@ namespace Readdit.Controllers
         [Route("{id}/{subReadditName}/submit-link")]
         public async Task<ActionResult> CreateLink(CreateLinkCommand request, int id, string subReadditName)
         {
+
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
             request.SubReadditId = id;
             request.User = await _userManager.GetUserAsync(HttpContext.User);
             await _mediator.Send(request);
