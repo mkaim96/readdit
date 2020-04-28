@@ -9,8 +9,7 @@ namespace Readdit.Models.SubReaddits
     public class SubReadditViewModel
     {
         public IReadOnlyList<LinkDto> Links { get; set; }
-        public string SubReadditName { get; set; }
-        public int SubReadditId { get; set; }
+        public SubReadditDto SubReaddit { get; set; }
         public int NextPage { get; set; }
         public int PreviousPage { get; set; }
     }

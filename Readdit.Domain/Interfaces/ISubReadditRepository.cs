@@ -11,7 +11,7 @@ namespace Readdit.Domain.Interfaces
         Task<IReadOnlyCollection<SubReaddit>> Search(string search);
         Task<IReadOnlyCollection<SubReaddit>> GetPopular();
         Task<SubReaddit> Add(SubReaddit subReaddit);
-        Task<SubReaddit> GetById(int id);
+        Task<SubReaddit> GetByName(string name);
         Task<bool> Exists(string name);
     }
 }

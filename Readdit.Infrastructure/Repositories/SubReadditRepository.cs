@@ -32,9 +32,9 @@ namespace Readdit.Infrastructure.Repositories
            return await _context.SubReaddits.AnyAsync(x => x.Name == name);
         }
 
-        public async Task<SubReaddit> GetById(int id)
+        public async Task<SubReaddit> GetByName(string name)
         {
-            return await _context.SubReaddits.FindAsync(id);
+            return await _context.SubReaddits.FindAsync(name);
         }
 
         public async Task<IReadOnlyCollection<SubReaddit>> GetPopular()

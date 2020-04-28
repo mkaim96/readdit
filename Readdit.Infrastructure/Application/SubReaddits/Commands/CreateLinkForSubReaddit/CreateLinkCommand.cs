@@ -14,7 +14,7 @@ namespace Readdit.Infrastructure.Application.SubReaddits.Commands.CreateLinkForS
         public ApplicationUser User { get; set; }
         public string Url { get; set; }
         public string Description { get; set; }
-        public int SubReadditId { get; set; }
+        public string SubReadditName { get; set; }
     }
 
     public class CreateLinkHandler : IRequestHandler<CreateLinkCommand, int>
@@ -34,7 +34,7 @@ namespace Readdit.Infrastructure.Application.SubReaddits.Commands.CreateLinkForS
                 request.Url = $"http://{request.Url}";
             }
 
-            var subreaddit = await _subReadditRepository.GetById(request.SubReadditId);
+            var subreaddit = await _subReadditRepository.GetByName(request.SubReadditName);
             var link = new Link(request.Url, request.Description, request.User, subreaddit);
 
             await _linksRepository.Add(link);
