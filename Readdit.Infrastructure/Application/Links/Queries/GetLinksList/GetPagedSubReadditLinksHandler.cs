@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Readdit.Infrastructure.Application.Links.Queries.GetLinksList
 {
-    public class GetSubReadditLinksHandler : IRequestHandler<GetPagedSubReadditLinks, IReadOnlyList<LinkDto>>
+    public class GetSubReadditLinksHandler : IRequestHandler<GetPagedSubReadditLinks, Paged<LinkDto>>
     {
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
@@ -25,7 +25,7 @@ namespace Readdit.Infrastructure.Application.Links.Queries.GetLinksList
             _mapper = mapper;
             _take = 2;
         }
-        public async Task<IReadOnlyList<LinkDto>> Handle(GetPagedSubReadditLinks request, CancellationToken cancellationToken)
+        public async Task<Paged<LinkDto>> Handle(GetPagedSubReadditLinks request, CancellationToken cancellationToken)
         {
             int skip = (request.Page - 1) * _take;
             //var links = await _context.Links
@@ -61,7 +61,18 @@ namespace Readdit.Infrastructure.Application.Links.Queries.GetLinksList
                 .Take(_take)
                 .ToListAsync();
 
-            return links.AsReadOnly();
+            var totalNumberOfRecords = await _context.Links.CountAsync();
+
+            var totalNumberOfPages = Math.Ceiling(totalNumberOfRecords / (float)_take);
+
+            return new Paged<LinkDto>
+            {
+                Items = links,
+                PageNumber = request.Page,
+                TotalNumberOfPages = (int)totalNumberOfPages,
+                TotalNumberOfRecords = totalNumberOfRecords,
+                PageSize = _take
+            };
         }
     }
 }

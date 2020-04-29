@@ -1,14 +1,18 @@
-﻿@using Readdit.Models.Links
-@model IndexViewModel
+﻿@using Readdit.Infrastructure
+@using Readdit.Infrastructure.Dto
+@model Paged<LinkDto>
+
 @{
     ViewData["Title"] = "Home Page";
     ViewData["ReturnUrl"] = "/";
+    var paginationModel = (Model.PageNumber, Model.TotalNumberOfPages);
 }
 
 <div class="text-center">
-    @foreach(var link in Model.Links)
+    @foreach(var link in Model.Items)
     {
         <partial name="_linkPartial", model="@link" view-data="ViewData"/>
     }
-    <a asp-action="Index" asp-controller="Home" asp-route-page="@Model.NextPage">Next page</a>
+
 </div>
+<partial name="_pagination" model="@paginationModel"/>

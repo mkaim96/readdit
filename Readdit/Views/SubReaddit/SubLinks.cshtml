@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "SubLinks";
     ViewData["returnUrl"] = $"/sub/{Model.SubReaddit.Name}";
+    var paginationModel = (Model.PagedLinks.PageNumber, Model.PagedLinks.TotalNumberOfPages);
 }
 
     <div class="box">
@@ -25,10 +26,11 @@
     </div>
 
     <div class="text-center">
-        @foreach (var link in Model.Links)
+        @foreach (var link in Model.PagedLinks.Items)
         {
             <partial name="_linkPartial" , model="@link" view-data="ViewData" />
         }
-        <a asp-action="GetLinks" asp-controller="SubReaddit" asp-route-page="@Model.NextPage">Next page</a>
     </div>
+
+    <partial name="_pagination" , model="paginationModel" view-data="ViewData" />
 

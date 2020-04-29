@@ -28,11 +28,9 @@ namespace Readdit.Controllers
 
         public async Task<IActionResult> Index(int page = 1)
         {
-            var links = await _mediator.Send(new GetPagedLinkList { Page = page});
+            var pagedLinks = await _mediator.Send(new GetPagedLinkList { Page = page});
 
-            var vm = new IndexViewModel { Links = links, NextPage = page + 1 };
-
-            return View(vm);
+            return View(pagedLinks);
         }
 
         public IActionResult Privacy()

@@ -86,14 +86,12 @@ namespace Readdit.Controllers
         [Route("{subReadditName}")]
         public async Task<IActionResult> GetLinks(string subReadditName, int page = 1)
         {
-            var links = await _mediator.Send(new GetPagedSubReadditLinks { Page = page, SubReadditName = subReadditName });
+            var pagedLinks = await _mediator.Send(new GetPagedSubReadditLinks { Page = page, SubReadditName = subReadditName });
             var subreaddit = await _mediator.Send(new GetSubReadditByName { Name = subReadditName });
             var vm = new SubReadditViewModel
             {
                 SubReaddit = subreaddit,
-                Links = links,
-                NextPage = page + 1,
-                PreviousPage = page - 1
+                PagedLinks = pagedLinks
             };
 
             return View("SubLinks", vm);

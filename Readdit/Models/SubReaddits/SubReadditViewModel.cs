@@ -1,4 +1,5 @@
-﻿using Readdit.Infrastructure.Dto;
+﻿using Readdit.Infrastructure;
+using Readdit.Infrastructure.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,7 @@ namespace Readdit.Models.SubReaddits
 {
     public class SubReadditViewModel
     {
-        public IReadOnlyList<LinkDto> Links { get; set; }
+        public Paged<LinkDto> PagedLinks { get; set; }
         public SubReadditDto SubReaddit { get; set; }
-        public int NextPage { get; set; }
-        public int PreviousPage { get; set; }
     }
 }

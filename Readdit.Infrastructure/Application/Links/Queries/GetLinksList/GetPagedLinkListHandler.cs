@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Readdit.Infrastructure.Dto;
 using Readdit.Infrastructure.Ef;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Readdit.Infrastructure.Application.Links.Queries.GetLinksList
 {
-    public class GetPagedLinkListHandler : IRequestHandler<GetPagedLinkList, IReadOnlyList<LinkDto>>
+    public class GetPagedLinkListHandler : IRequestHandler<GetPagedLinkList, Paged<LinkDto>>
     {
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
@@ -25,7 +26,7 @@ namespace Readdit.Infrastructure.Application.Links.Queries.GetLinksList
         }
 
 
-        public async Task<IReadOnlyList<LinkDto>> Handle(GetPagedLinkList request, CancellationToken cancellationToken)
+        public async Task<Paged<LinkDto>> Handle(GetPagedLinkList request, CancellationToken cancellationToken)
         {
             // Page = 1, Take = 5; skip = 0 * 5 = 0; on page 1 dont skip
             // Page = 2, Take = 5; skip = 1 * 5 = 5; skip first five
@@ -63,7 +64,19 @@ namespace Readdit.Infrastructure.Application.Links.Queries.GetLinksList
                 .Take(_take)
                 .ToListAsync();
 
-            return links.AsReadOnly();
+            var totalNumberOfRecords = await _context.Links.CountAsync();
+
+            var totalNumbersOfPages = Math.Ceiling(totalNumberOfRecords / (float)_take);
+
+            return new Paged<LinkDto>
+            {
+                Items = links,
+                TotalNumberOfRecords = totalNumberOfRecords,
+                TotalNumberOfPages = (int)totalNumbersOfPages,
+                PageNumber = request.Page,
+                PageSize = _take
+            };
+
         }
     }
 }
