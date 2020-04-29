@@ -4,18 +4,31 @@
     ViewData["returnUrl"] = $"/sub/{Model.SubReaddit.Name}";
 }
 
-<h4>@Model.SubReaddit.Description</h4>
-<p>@Model.SubReaddit.Name</p>
-<a 
-   asp-action="CreateLink"
-   asp-controller="SubReaddit"
-   asp-route-subReadditName="@Model.SubReaddit.Name">Submit a link to this community</a>
+    <div class="box">
+        <div class="row">
+            <div class="col-sm-auto">
+                <h3>@Model.SubReaddit.Description</h3>
+            </div>
+            <div class="col-sm d-flex align-items-center">
+                <a class="button no-decoration" 
+                    asp-action="CreateLink"
+                    asp-controller="SubReaddit"
+                    asp-route-subReadditName="@Model.SubReaddit.Name">Submit a link</a>
+                <a class="button no-decoration">Join</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <p>@Model.SubReaddit.Name</p>
+            </div>
+        </div>
+    </div>
 
-<div class="text-center">
-    @foreach (var link in Model.Links)
-    {
-        <partial name="_linkPartial" , model="@link" view-data="ViewData" />
-    }
-    <a asp-action="GetLinks" asp-controller="SubReaddit" asp-route-page="@Model.NextPage">Next page</a>
-</div>
+    <div class="text-center">
+        @foreach (var link in Model.Links)
+        {
+            <partial name="_linkPartial" , model="@link" view-data="ViewData" />
+        }
+        <a asp-action="GetLinks" asp-controller="SubReaddit" asp-route-page="@Model.NextPage">Next page</a>
+    </div>
 

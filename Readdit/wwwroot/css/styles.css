@@ -1,6 +1,47 @@
-﻿body {
+﻿/* GLOBAL STYLES*/
+body {
     background: #DAE0E6;
 }
+main {
+    max-width: 820px;
+    margin: 0 auto;
+}
+
+/*HELPERS*/
+.no-decoration {
+    color: black;
+    text-decoration: none;
+}
+
+    .no-decoration:hover {
+        text-decoration: none;
+        color: black;
+    }
+
+.button {
+    background-color: #0079D3;
+    padding: 5px 8px;
+    font-size: .85em;
+    border-radius: 3px;
+    font-weight: 700;
+    margin: 0 5px;
+}
+
+    .button:hover {
+        cursor: pointer;
+        background-color: #0062aa;
+    }
+
+.box {
+    background-color: white;
+    border-radius: 3px;
+    padding: 10px 15px 0 15px;
+    box-sizing: border-box;
+    paddi
+}
+
+
+/* POST STYLES*/
 .sidebar {
 
     background: #F8F9FA;
@@ -33,25 +74,18 @@
     align-content: flex-end;
 }
 
-.no-decoration {
-    color: black;
-    text-decoration: none;
-}
-
-.no-decoration:hover {
-    text-decoration: none;
-    color: black; 
-}
-
+/* COMMENT STYLES*/
 .comment {
     padding: 5px 0 10px;
     background: #fff;
     margin: 10px 0 10px 0;
 }
 
-main {
-    max-width: 720px;
-    margin: 0 auto; 
-}
+/* SUBREADDIT STYLES*/
+
+
+
+
+
 
 
