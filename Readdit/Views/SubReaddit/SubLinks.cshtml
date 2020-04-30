@@ -1,8 +1,11 @@
 ﻿@model Readdit.Models.SubReaddits.SubReadditViewModel
 @{
-    ViewData["Title"] = "SubLinks";
+    ViewData["Title"] = @Model.SubReaddit.Name;
     ViewData["returnUrl"] = $"/sub/{Model.SubReaddit.Name}";
-    var paginationModel = (Model.PagedLinks.PageNumber, Model.PagedLinks.TotalNumberOfPages);
+    var previousPage = Model.PagedLinks.PageNumber - 1;
+    var nextPage = Model.PagedLinks.PageNumber + 1;
+    var nextPageRoute = $"{Model.SubReaddit.Name}?page={nextPage}";
+    var previousPageRoute = $"{Model.SubReaddit.Name}?page={previousPage}";
 }
 
     <div class="box">
@@ -32,5 +35,23 @@
         }
     </div>
 
-    <partial name="_pagination" , model="paginationModel" view-data="ViewData" />
+    <div class="row d-flex justify-content-center">
+        @if (Model.PagedLinks.PageNumber == 1)
+        {
+            <a class="disabled pagination-link">&laquo;Back</a>
+        }
+        else
+        {
+            <a class="pagination-link" href="@previousPageRoute">&laquo;Back</a>
+        }
+
+        @if (Model.PagedLinks.PageNumber >= Model.PagedLinks.TotalNumberOfPages)
+        {
+            <a class="disabled pagination-link">Next&raquo;</a>
+        }
+        else
+        {
+            <a class="pagination-link" href="@nextPageRoute">Next&raquo;</a>
+        }
+    </div>
 

@@ -34,7 +34,7 @@ namespace Readdit.Infrastructure.Repositories
 
         public async Task<SubReaddit> GetByName(string name)
         {
-            return await _context.SubReaddits.FindAsync(name);
+            return await _context.SubReaddits.FirstAsync(x => x.Name == name);
         }
 
         public async Task<IReadOnlyCollection<SubReaddit>> GetPopular()

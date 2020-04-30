@@ -18,7 +18,7 @@
                     <a asp-action="DownVote"
                        asp-controller="Votes"
                        asp-route-linkId="@Model.Id"
-                       asp-route-returnUrl="@ViewData["ReturnUrl"]">
+                       asp-route-returnUrl="@ViewData["returnUrl"]">
                         <img src="~/icons/arrow-thick-bottom.svg" width="15" height="15" alt="Up Down" />
                     </a>
                 </div>
@@ -32,7 +32,6 @@
                         {
                             <a asp-action="GetLinks"
                                asp-controller="SubReaddit"
-                               asp-route-id="@Model.SubReaddit.Id"
                                asp-route-subReadditName="@Model.SubReaddit.Name">
                                 @Model.SubReaddit.Name
                             </a>

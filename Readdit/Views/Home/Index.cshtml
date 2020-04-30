@@ -5,7 +5,6 @@
 @{
     ViewData["Title"] = "Home Page";
     ViewData["ReturnUrl"] = "/";
-    var paginationModel = (Model.PageNumber, Model.TotalNumberOfPages);
 }
 
 <div class="text-center">
@@ -15,4 +14,23 @@
     }
 
 </div>
-<partial name="_pagination" model="@paginationModel"/>
+
+<div class="row d-flex justify-content-center">
+    @if (Model.PageNumber == 1)
+    {
+        <a class="disabled pagination-link">&laquo;Back</a>
+    }
+    else
+    {
+        <a class="pagination-link" asp-action="Index" asp-controller="Home" asp-route-page="@(Model.PageNumber - 1)">&laquo;Back</a>
+    }
+
+    @if (Model.PageNumber >= Model.TotalNumberOfPages)
+    {
+        <a class="disabled pagination-link">Next&raquo;</a>
+    }
+    else
+    {
+        <a class="pagination-link" asp-action="Index" asp-controller="Home" asp-route-page="@(Model.PageNumber + 1)">Next&raquo;</a>
+    }
+</div>
