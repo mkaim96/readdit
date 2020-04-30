@@ -61,7 +61,9 @@ namespace Readdit.Infrastructure.Application.Links.Queries.GetLinksList
                 .Take(_take)
                 .ToListAsync();
 
-            var totalNumberOfRecords = await _context.Links.CountAsync();
+            var totalNumberOfRecords = await _context.Links
+                .Where(x => x.SubReaddit.Name == request.SubReadditName)
+                .CountAsync();
 
             var totalNumberOfPages = Math.Ceiling(totalNumberOfRecords / (float)_take);
 
