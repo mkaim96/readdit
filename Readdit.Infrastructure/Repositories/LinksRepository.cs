@@ -24,6 +24,12 @@ namespace Readdit.Infrastructure.Repositories
             return link;
         }
 
+        public async Task Delete(Link link)
+        {
+            _context.Links.Remove(link);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task<Link> GetById(int id)
         {
             return await _context.Links.FindAsync(id);
