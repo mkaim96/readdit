@@ -26,15 +26,28 @@
             <div class="col-sm-10 post">
                 <div class="row topbar">
                     <span class="small text-muted">
+                        
+                        <span>
+                            Posted by: 
+                            <a asp-action="Index" asp-controller="Users" asp-route-username="@Model.Author">@Model.Author</a>
+                        </span>
+                        <span>
+                            at @Model.CreatedAt.ToString("dd.MM.yyyy")
+                        </span>
 
-                        Posted by: @Model.Author |
                         @if (Model.SubReaddit != null)
                         {
-                            <a asp-action="GetLinks"
-                               asp-controller="SubReaddit"
-                               asp-route-subReadditName="@Model.SubReaddit.Name">
+                            <span> | Community: 
+                                <a asp-action="GetLinks"
+                                asp-controller="SubReaddit"
+                                asp-route-subReadditName="@Model.SubReaddit.Name">
                                 @Model.SubReaddit.Name
-                            </a>
+                                </a>
+                            </span>
+                        }
+
+                        @if(Model.UpdatedAt != null) {
+                            <span> | Updated at: @Model.UpdatedAt?.ToString("dd.MM.yyyy")</span>
                         }
                     </span>
                 </div>
