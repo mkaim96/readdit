@@ -1,8 +1,29 @@
-﻿@model Readdit.Models.Links.DetailsViewModel
+﻿@using Microsoft.AspNetCore.Identity
+@using Readdit.Domain.Models
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@model Readdit.Models.Links.DetailsViewModel
+
 @{
     ViewData["Title"] = "Details";
     ViewData["LinkId"] = Model.Link.Id;
     ViewData["returnUrl"] = $"/links/details/{Model.Link.Id}";
+}
+
+@if(SignInManager.IsSignedIn(User))
+{
+    if(User.Identity.Name == Model.Link.Author) 
+    {
+        <div class="buttons-group">
+            <a class="button no-decoration" 
+                asp-action="Edit"
+                asp-controller="Links"
+                asp-route-id="@Model.Link.Id">Update this link</a>
+            <a class="button no-decoration">Delete this link</a>
+        </div>
+    }
 }
 
 <partial name="_linkPartial" model="@Model.Link"/>

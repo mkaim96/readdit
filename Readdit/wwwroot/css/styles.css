@@ -25,6 +25,11 @@ main {
     border-radius: 3px;
     font-weight: 700;
     margin: 0 5px;
+    margin-left: 0;
+}
+
+.buttons-group {
+    margin-bottom: 10px;
 }
 
     .button:hover {
@@ -37,7 +42,7 @@ main {
     border-radius: 3px;
     padding: 10px 15px 0 15px;
     box-sizing: border-box;
-    paddi
+    margin-bottom: 10px;
 }
 
 
@@ -82,6 +87,9 @@ main {
 }
 
 /* SUBREADDIT STYLES*/
+.subreaddit-header {
+    margin-bottom: 20px;
+}
 
 
 /* PAGINATION*/
