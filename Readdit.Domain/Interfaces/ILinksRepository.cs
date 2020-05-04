@@ -11,5 +11,6 @@ namespace Readdit.Domain.Interfaces
         Task<Link> Add(Link link);
         Task<Link> GetById(int id);
         Task Update(Link link);
+        Task Delete(Link link);
     }
 }
