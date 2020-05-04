@@ -45,6 +45,42 @@ namespace Readdit.Controllers
             return View("Index", vm);
         }
 
+        [HttpGet]
+        [Route("{subReadditName}/link/{linkId}")]
+        public async Task<IActionResult> LinkDetails(int linkId)
+        {
+            var res = await _mediator.Send(new GetLinkWithDetails { Id = linkId });
+            var vm = new Models.Links.DetailsViewModel { Link = res.link, Comments = res.commests};
+            return View("Links/Details", vm);
+        }
+
+        [HttpGet]
+        [Route("{subReadditName}")]
+        public async Task<IActionResult> GetLinks(string subReadditName, int page = 1)
+        {
+            var pagedLinks = await _mediator.Send(new GetPagedSubReadditLinks { Page = page, SubReadditName = subReadditName });
+            var subreaddit = await _mediator.Send(new GetSubReadditByName { Name = subReadditName });
+            var vm = new SubReadditViewModel
+            {
+                SubReaddit = subreaddit,
+                PagedLinks = pagedLinks
+            };
+
+            return View("SubReadditLinks", vm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult>SearchSubReaddits(IFormCollection form)
+        {
+            var vm = new IndexViewModel
+            {
+                Popular = await _mediator.Send(new GetPopularSubReaddits()),
+                SearchResults = await _mediator.Send(new SearchSubReaddits { SearchString = form["search"] })
+            };
+
+            return View(nameof(Index), vm);
+        }
+
         #region Create subreaddit
         [HttpGet]
         [Route("create")]
@@ -69,33 +105,7 @@ namespace Readdit.Controllers
         }
         #endregion
 
-        [HttpPost]
-        public async Task<IActionResult>SearchSubReaddits(IFormCollection form)
-        {
-            var vm = new IndexViewModel
-            {
-                Popular = await _mediator.Send(new GetPopularSubReaddits()),
-                SearchResults = await _mediator.Send(new SearchSubReaddits { SearchString = form["search"] })
-            };
-
-            return View(nameof(Index), vm);
-        }
-
         #region Create link for subreaddit
-        [HttpGet]
-        [Route("{subReadditName}")]
-        public async Task<IActionResult> GetLinks(string subReadditName, int page = 1)
-        {
-            var pagedLinks = await _mediator.Send(new GetPagedSubReadditLinks { Page = page, SubReadditName = subReadditName });
-            var subreaddit = await _mediator.Send(new GetSubReadditByName { Name = subReadditName });
-            var vm = new SubReadditViewModel
-            {
-                SubReaddit = subreaddit,
-                PagedLinks = pagedLinks
-            };
-
-            return View("SubLinks", vm);
-        }
 
         [Authorize]
         [HttpGet]
@@ -123,14 +133,5 @@ namespace Readdit.Controllers
         }
 
         #endregion
-
-        [HttpGet]
-        [Route("{subReadditName}/link/{linkId}")]
-        public async Task<IActionResult> LinkDetails(int linkId)
-        {
-            var res = await _mediator.Send(new GetLinkWithDetails { Id = linkId });
-            var vm = new Models.Links.DetailsViewModel { Link = res.link, Comments = res.commests};
-            return View("Links/Details", vm);
-        }
     }
 }
