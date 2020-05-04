@@ -18,7 +18,6 @@ namespace Readdit.Infrastructure.Application.Links.Queries.GetLink
     public class GetLinkWithDetailsHandler : IRequestHandler<GetLinkWithDetails, (LinkDto link, IReadOnlyList<CommentDto> comments)>
     {
         private ApplicationDbContext _context;
-        private ILinksRepository _linksRepository;
         private IMapper _mapper;
 
         public GetLinkWithDetailsHandler(ApplicationDbContext context, IMapper mapper)

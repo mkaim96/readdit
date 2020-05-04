@@ -1,0 +1,36 @@
+@model Readdit.Models.Users.IndexViewModel
+
+@{
+    ViewData["Title"] = "Users";
+    var previousPageRoute = $"/user/{Model.Username}?page={Model.PagedLinks.PageNumber - 1}";
+    var nextPageRoute = $"/user/{Model.Username}?page={Model.PagedLinks.PageNumber + 1}";
+}
+
+<h3>Links posted by @Model.Username</h3>
+
+<div class="text-center">
+    @foreach (var link in Model.PagedLinks.Items)
+    {
+        <partial name="_linkPartial" model="link" />
+    }
+</div>
+
+<div class="row d-flex justify-content-center">
+    @if (Model.PagedLinks.PageNumber == 1)
+    {
+        <a class="disabled pagination-link">&laquo;Back</a>
+    }
+    else
+    {
+        <a class="pagination-link" href="@previousPageRoute">&laquo;Back</a>
+    }
+
+    @if (Model.PagedLinks.PageNumber >= Model.PagedLinks.TotalNumberOfPages)
+    {
+        <a class="disabled pagination-link">Next&raquo;</a>
+    }
+    else
+    {
+        <a class="pagination-link" href="@nextPageRoute">Next&raquo;</a>
+    }
+</div>
