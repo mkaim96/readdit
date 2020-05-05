@@ -11,17 +11,12 @@ using Readdit.Infrastructure.Application.Comments.Commands;
 namespace Readdit.Controllers
 {
     [Route("comments")]
-    public class CommentsController : Controller
+    public class CommentsController : ControllerBase
     {
-        private IMediator _mediator;
-        private UserManager<ApplicationUser> _userManager;
-
-        public CommentsController(IMediator mediator, UserManager<ApplicationUser> um)
+        public CommentsController(IMediator mediator, UserManager<ApplicationUser> um) : base(mediator, um)
         {
-            _mediator = mediator;
-            _userManager = um;
         }
-
+        
         [HttpPost]
         [Route("create")]
         public async Task<IActionResult> Create(CreateCommentCommand request)
@@ -31,9 +26,9 @@ namespace Readdit.Controllers
                 return RedirectToAction("Details", "Links", new { id = request.LinkId });
             }
 
-            request.User = await _userManager.GetUserAsync(HttpContext.User);
+            request.User = await userManager.GetUserAsync(HttpContext.User);
 
-            await _mediator.Send(request);
+            await mediator.Send(request);
 
             return RedirectToAction("Details", "Links", new { id = request.LinkId });
         }

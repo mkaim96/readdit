@@ -21,21 +21,16 @@ using Readdit.Models.SubReaddits;
 namespace Readdit.Controllers
 {
     [Route("sub")]
-    public class SubReadditController : Controller
+    public class SubReadditController : ControllerBase
     {
-        private readonly IMediator _mediator;
-        private readonly UserManager<ApplicationUser> _userManager;
-
-        public SubReadditController(IMediator mediator, UserManager<ApplicationUser> um)
+        public SubReadditController(IMediator mediator, UserManager<ApplicationUser> um) : base(mediator, um)
         {
-            _mediator = mediator;
-            _userManager = um;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var popular = await _mediator.Send(new GetPopularSubReaddits());
+            var popular = await mediator.Send(new GetPopularSubReaddits());
 
             var vm = new IndexViewModel
             {
@@ -49,7 +44,7 @@ namespace Readdit.Controllers
         [Route("{subReadditName}/link/{linkId}")]
         public async Task<IActionResult> LinkDetails(int linkId)
         {
-            var res = await _mediator.Send(new GetLinkWithDetails { Id = linkId });
+            var res = await mediator.Send(new GetLinkWithDetails { Id = linkId });
             var vm = new Models.Links.DetailsViewModel { Link = res.link, Comments = res.commests};
             return View("Links/Details", vm);
         }
@@ -58,8 +53,8 @@ namespace Readdit.Controllers
         [Route("{subReadditName}")]
         public async Task<IActionResult> GetLinks(string subReadditName, int page = 1)
         {
-            var pagedLinks = await _mediator.Send(new GetPagedSubReadditLinks { Page = page, SubReadditName = subReadditName });
-            var subreaddit = await _mediator.Send(new GetSubReadditByName { Name = subReadditName });
+            var pagedLinks = await mediator.Send(new GetPagedSubReadditLinks { Page = page, SubReadditName = subReadditName });
+            var subreaddit = await mediator.Send(new GetSubReadditByName { Name = subReadditName });
             var vm = new SubReadditViewModel
             {
                 SubReaddit = subreaddit,
@@ -74,8 +69,8 @@ namespace Readdit.Controllers
         {
             var vm = new IndexViewModel
             {
-                Popular = await _mediator.Send(new GetPopularSubReaddits()),
-                SearchResults = await _mediator.Send(new SearchSubReaddits { SearchString = form["search"] })
+                Popular = await mediator.Send(new GetPopularSubReaddits()),
+                SearchResults = await mediator.Send(new SearchSubReaddits { SearchString = form["search"] })
             };
 
             return View(nameof(Index), vm);
@@ -98,8 +93,8 @@ namespace Readdit.Controllers
                 return View(request);
             }
 
-            request.User = await _userManager.GetUserAsync(HttpContext.User);
-            await _mediator.Send(request);
+            request.User = await userManager.GetUserAsync(HttpContext.User);
+            await mediator.Send(request);
 
             return RedirectToAction("GetLinks", new { subReadditName = request.Name });
         }
@@ -126,8 +121,8 @@ namespace Readdit.Controllers
             }
 
             request.SubReadditName = subReadditName;
-            request.User = await _userManager.GetUserAsync(HttpContext.User);
-            await _mediator.Send(request);
+            request.User = await userManager.GetUserAsync(HttpContext.User);
+            await mediator.Send(request);
 
             return RedirectToAction("GetLinks", new { subReadditName }); 
         }

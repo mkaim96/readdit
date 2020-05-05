@@ -10,22 +10,17 @@ namespace Readdit.Controllers
 {
 
     [Route("users")]
-    public class UsersController : Controller
+    public class UsersController : ControllerBase
     {
-        private readonly IMediator _mediator;
-        private readonly UserManager<ApplicationUser> _userManager;
-
-        public UsersController(IMediator mediator, UserManager<ApplicationUser> um)
+        public UsersController(IMediator mediator, UserManager<ApplicationUser> um) : base(mediator, um)
         {
-            _mediator = mediator;
-            _userManager = um;
         }
 
         [HttpGet]
         [Route("{username}")]
         public async Task<IActionResult> Index(string username, int page = 1) 
         {
-            var pagedLinks = await _mediator.Send(new GetLinksByUser{
+            var pagedLinks = await mediator.Send(new GetLinksByUser{
                 Username = username,
                 PageNumber = page
             });

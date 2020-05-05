@@ -15,20 +15,15 @@ using Readdit.Models.Links;
 
 namespace Readdit.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : ControllerBase
     {
-        private readonly IMediator _mediator;
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger, IMediator mediator)
+        public HomeController(IMediator mediator, UserManager<ApplicationUser> um) : base(mediator, um)
         {
-            _mediator = mediator;
-            _logger = logger;
         }
 
         public async Task<IActionResult> Index(int page = 1)
         {
-            var pagedLinks = await _mediator.Send(new GetPagedLinkList { Page = page});
+            var pagedLinks = await mediator.Send(new GetPagedLinkList { Page = page});
 
             return View(pagedLinks);
         }

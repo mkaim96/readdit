@@ -18,16 +18,12 @@ namespace Readdit.Controllers
 {
     [Authorize]
     [Route("links")]
-    public class LinksController : Controller
+    public class LinksController : ControllerBase
     {
-        private IMediator _mediator;
-        private UserManager<ApplicationUser> _userManager;
-
-        public LinksController(IMediator mediator, UserManager<ApplicationUser> um)
+        public LinksController(IMediator mediator, UserManager<ApplicationUser> um) : base(mediator, um)
         {
-            _mediator = mediator;
-            _userManager = um;
         }
+
         [HttpGet("create")]
         public IActionResult Create()
         {
@@ -42,16 +38,16 @@ namespace Readdit.Controllers
                 return View("Create", request);
             }
 
-            request.User = await _userManager.GetUserAsync(HttpContext.User);
+            request.User = await userManager.GetUserAsync(HttpContext.User);
 
-            var id = await _mediator.Send(request);
+            var id = await mediator.Send(request);
             return RedirectToAction(nameof(Details), new { id });
         }
         [HttpGet]
         [Route("details/{id}")]
         public async Task<IActionResult> Details(int id)
         {
-            var res = await _mediator.Send(new GetLinkWithDetails() { Id = id });
+            var res = await mediator.Send(new GetLinkWithDetails() { Id = id });
 
             var vm = new DetailsViewModel { Link = res.link, Comments = res.commests};
 
@@ -62,7 +58,7 @@ namespace Readdit.Controllers
         [Route("edit/{id}")]
         public async Task<IActionResult> Edit(int id)
         {
-            var link = await _mediator.Send(new GetLinkById {LinkId = id});
+            var link = await mediator.Send(new GetLinkById {LinkId = id});
 
             return View("Edit", link);
         }
@@ -76,7 +72,7 @@ namespace Readdit.Controllers
                 LinkId = link.Id, Url = link.Url, Description = link.Description 
             };
 
-            await _mediator.Send(command);
+            await mediator.Send(command);
 
             return RedirectToAction("Details", new { link.Id });
         }
@@ -85,7 +81,7 @@ namespace Readdit.Controllers
         [Route("delete/{id}")]
         public async Task<IActionResult> Delete(int id, string returnUrl = null)
         {
-            await _mediator.Send(new DeleteLinkCommand { LinkId = id});
+            await mediator.Send(new DeleteLinkCommand { LinkId = id});
 
             if(returnUrl != null) {
                 return Redirect(returnUrl);

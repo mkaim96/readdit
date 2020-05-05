@@ -14,23 +14,18 @@ namespace Readdit.Controllers
 {
     [Route("votes")]
     [Authorize]
-    public class VotesController : Controller
+    public class VotesController : ControllerBase
     {
-        private IMediator _mediator;
-        private UserManager<ApplicationUser> _userManager;
-
-        public VotesController(IMediator mediator, UserManager<ApplicationUser> um)
+        public VotesController(IMediator mediator, UserManager<ApplicationUser> um) : base(mediator, um)
         {
-            _mediator = mediator;
-            _userManager = um;
         }
 
         [HttpGet]
         [Route("upvote")]
         public async Task<IActionResult> UpVote(int linkId, string returnUrl)
         {
-            var request = new UpVoteCommand { LinkId = linkId, UserId = _userManager.GetUserId(HttpContext.User) };
-            await _mediator.Send(request);
+            var request = new UpVoteCommand { LinkId = linkId, UserId = userManager.GetUserId(HttpContext.User) };
+            await mediator.Send(request);
 
             return Redirect(returnUrl);
         }
@@ -38,8 +33,8 @@ namespace Readdit.Controllers
         [Route("downvote")]
         public async Task<IActionResult> DownVote(int linkId, string returnUrl)
         {
-            var request = new DownVoteCommand { LinkId = linkId, UserId = _userManager.GetUserId(HttpContext.User) };
-            await _mediator.Send(request);
+            var request = new DownVoteCommand { LinkId = linkId, UserId = userManager.GetUserId(HttpContext.User) };
+            await mediator.Send(request);
 
             return Redirect(returnUrl);
         }
