@@ -18,5 +18,21 @@ namespace Readdit.Infrastructure.Ef
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Vote> Votes { get; set; }
         public DbSet<SubReaddit> SubReaddits { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder) 
+        {
+
+            builder.Entity<Link>()
+                .HasMany(x => x.Comments)
+                .WithOne(y => y.Link)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<Link>()
+            .HasMany(x => x.Votes)
+            .WithOne(x => x.Link)
+            .OnDelete(DeleteBehavior.Cascade);
+
+            base.OnModelCreating(builder);
+        }
     }
 }

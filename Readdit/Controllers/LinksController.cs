@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Readdit.Domain.Models;
 using Readdit.Infrastructure.Application.Links.Commands.CreateLink;
+using Readdit.Infrastructure.Application.Links.Commands.DeleteLink;
 using Readdit.Infrastructure.Application.Links.Commands.UpdateLink;
 using Readdit.Infrastructure.Application.Links.Queries.GetLink;
 using Readdit.Infrastructure.Dto;
@@ -78,6 +79,19 @@ namespace Readdit.Controllers
             await _mediator.Send(command);
 
             return RedirectToAction("Details", new { link.Id });
+        }
+
+        [HttpGet]
+        [Route("delete/{id}")]
+        public async Task<IActionResult> Delete(int id, string returnUrl = null)
+        {
+            await _mediator.Send(new DeleteLinkCommand { LinkId = id});
+
+            if(returnUrl != null) {
+                return Redirect(returnUrl);
+            }
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }

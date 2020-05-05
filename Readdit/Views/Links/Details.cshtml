@@ -21,7 +21,10 @@
                 asp-action="Edit"
                 asp-controller="Links"
                 asp-route-id="@Model.Link.Id">Update this link</a>
-            <a class="button no-decoration">Delete this link</a>
+            <a class="button no-decoration"
+                asp-action="Delete"
+                asp-controller="Links"
+                asp-route-id="@Model.Link.Id">Delete this link</a>
         </div>
     }
 }
