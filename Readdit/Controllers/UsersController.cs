@@ -12,8 +12,11 @@ namespace Readdit.Controllers
     [Route("users")]
     public class UsersController : ControllerBase
     {
-        public UsersController(IMediator mediator, UserManager<ApplicationUser> um) : base(mediator, um)
+        private readonly SignInManager<ApplicationUser> _signInManager;
+
+        public UsersController(IMediator mediator, UserManager<ApplicationUser> um, SignInManager<ApplicationUser> sm) : base(mediator, um)
         {
+            _signInManager = sm;
         }
 
         [HttpGet]
@@ -28,6 +31,16 @@ namespace Readdit.Controllers
             var vm = new IndexViewModel { PagedLinks = pagedLinks, Username = username };
 
             return View(vm);
+        }
+
+        public async Task<IActionResult> Logout() 
+        {
+            if(_signInManager.IsSignedIn(HttpContext.User))
+            {
+                await _signInManager.SignOutAsync();
+            }
+            
+            return  RedirectToAction("Index", "Home");
         }
     }
 }
