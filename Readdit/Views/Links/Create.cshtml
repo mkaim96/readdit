@@ -1,18 +1,22 @@
 ﻿@model Readdit.Infrastructure.Application.Links.Commands.CreateLink.CreateLinkCommand
 
-<h1>Submit a link</h1>
 
-<form method="post" asp-action="Create" asp-controller="Links">
-    <div class="form-group row">
-        <label asp-for="Url"></label>
-        <span class="text-danger" asp-validation-for="Url"></span>
-        <input class="form-control" asp-for="Url" />
-    </div>
-    <div class="form-group row">
-        <label asp-for="Description"></label>
-        <span class="text-danger" asp-validation-for="Description"></span>
-        <input class="form-control" asp-for="Description" />
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+<div class="box">
 
+<h5 class="page-header">Submit a link</h5>
+
+    <form method="post" asp-action="Create" asp-controller="Links">
+        <div class="form-group">
+            <label asp-for="@Model.Url"></label>
+            <span class="text-danger" asp-validation-for="Url"></span>
+            <input class="form-control" asp-for="@Model.Url" />
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Description"></label>
+            <span class="text-danger" asp-validation-for="Description"></span>
+            <input class="form-control" asp-for="@Model.Description" />
+        </div>
+        <button type="submit" class="btn btn-primary mb-3">Submit</button>
+    </form>
+
+</div>

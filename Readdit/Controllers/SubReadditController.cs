@@ -105,9 +105,10 @@ namespace Readdit.Controllers
         [Authorize]
         [HttpGet]
         [Route("{subReadditName}/submit-link")]
-        public IActionResult CreateLink()
+        public IActionResult CreateLink(string subReadditName)
         {
-            return View();
+            var model = new CreateLinkCommand { SubReadditName = subReadditName };
+            return View(model);
         }
 
         [HttpPost]

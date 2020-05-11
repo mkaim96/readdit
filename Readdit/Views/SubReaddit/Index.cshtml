@@ -6,20 +6,20 @@
 <div class="container">
     <div class="row">
 
-        <div class="col-sm-6">
+        <div class="col-sm-6 box p-3 mr-1 d-table">
             <label>Search for communities: </label>
-            <form method="post" asp-action="SearchSubReaddits" asp-controller="SubReaddit">
-                <div class="form-inline">
-                    <input name="search" /> <button type="submit" class="btn btn-primary">Search</button>
-                </div>
+            <form method="post" asp-action="SearchSubReaddits" asp-controller="SubReaddit" class="form-inline">
+                    <input class="form-control" name="search"/>
+                    <button type="submit" class="btn btn-light ml-1">Search</button>
             </form>
             <a asp-action="Create" asp-controller="SubReaddit">Create new community</a>
             @if (Model.SearchResults.Count != 0)
             {
-                <ul>
+                <h6 class="mt-4">Search results</h6>
+                <ul class="list-group list-group-flush mt-4">
                     @foreach (var sub in Model.SearchResults)
                     {
-                        <li>
+                        <li class="list-group-item">
                             <a asp-action="GetLinks"
                                asp-controller="SubReaddit"
                                asp-route-subReadditName="@sub.Name">
@@ -31,16 +31,17 @@
             }
         </div>
 
-        <div class="col-sm-6">
+        <div class="col-sm-5 box p-3 d-table">
             <h4>Popular</h4>
-            <ul>
+            <ol class="list-group">
                 @foreach(var sub in Model.Popular)
                 {
-                    <li><a asp-action="GetLinks"
+                    <li class="list-group-item">
+                        <a asp-action="GetLinks"
                            asp-controller="SubReaddit"
                            asp-route-subReadditName="@sub.Name">
-                        @sub.Name</a></li>
-
+                        @sub.Name</a>
+                    </li>
                 }
             </ul>
         </div>
