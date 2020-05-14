@@ -23,7 +23,7 @@ namespace Readdit.Controllers
 
         public async Task<IActionResult> Index(int page = 1)
         {
-            var pagedLinks = await mediator.Send(new GetPagedLinkList { Page = page});
+            var pagedLinks = await mediator.Send(new GetPagedLinkList { Page = page, PageSize = 2});
 
             return View(pagedLinks);
         }

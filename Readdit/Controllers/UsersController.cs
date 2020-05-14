@@ -14,7 +14,9 @@ namespace Readdit.Controllers
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public UsersController(IMediator mediator, UserManager<ApplicationUser> um, SignInManager<ApplicationUser> sm) : base(mediator, um)
+        public UsersController(IMediator mediator,
+            UserManager<ApplicationUser> um,
+            SignInManager<ApplicationUser> sm) : base(mediator, um)
         {
             _signInManager = sm;
         }
@@ -23,9 +25,11 @@ namespace Readdit.Controllers
         [Route("{username}")]
         public async Task<IActionResult> Index(string username, int page = 1) 
         {
-            var pagedLinks = await mediator.Send(new GetLinksByUser{
+            var pagedLinks = await mediator.Send(new GetLinksByUser
+            {
                 Username = username,
-                PageNumber = page
+                PageNumber = page,
+                PageSize = 2
             });
 
             var vm = new IndexViewModel { PagedLinks = pagedLinks, Username = username };

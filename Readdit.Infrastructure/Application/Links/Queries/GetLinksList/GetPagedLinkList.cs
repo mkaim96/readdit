@@ -16,19 +16,18 @@ namespace Readdit.Infrastructure.Application.Links.Queries.GetLinksList
     public class GetPagedLinkList : IRequest<Paged<LinkDto>>
     {
         public int Page { get; set; }
+        public int PageSize { get; set; }
     }
 
         public class GetPagedLinkListHandler : IRequestHandler<GetPagedLinkList, Paged<LinkDto>>
     {
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
-        private readonly int _take;
 
         public GetPagedLinkListHandler(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
-            _take = 2;
         }
 
 
@@ -37,7 +36,7 @@ namespace Readdit.Infrastructure.Application.Links.Queries.GetLinksList
             // Page = 1, Take = 5; skip = 0 * 5 = 0; on page 1 dont skip
             // Page = 2, Take = 5; skip = 1 * 5 = 5; skip first five
             // Page = 3, Take = 5; skip = 2 * 5 = 10; skip first ten, itd
-            int skip = (request.Page - 1) * _take;
+            int skip = (request.Page - 1) * request.PageSize;
 
             //var links = await _context.Links
             //    .Select(x => new LinkDto
@@ -67,22 +66,15 @@ namespace Readdit.Infrastructure.Application.Links.Queries.GetLinksList
                 .ProjectTo<LinkDto>(_mapper.ConfigurationProvider)
                 .OrderByDescending(x => x.Ups - x.Downs)
                 .Skip(skip)
-                .Take(_take)
+                .Take(request.PageSize)
                 .ToListAsync();
 
             var totalNumberOfRecords = await _context.Links.CountAsync();
 
-            var totalNumbersOfPages = Math.Ceiling(totalNumberOfRecords / (float)_take);
-
-            return new Paged<LinkDto>
-            {
-                Items = links,
-                TotalNumberOfRecords = totalNumberOfRecords,
-                TotalNumberOfPages = (int)totalNumbersOfPages,
-                PageNumber = request.Page,
-                PageSize = _take
-            };
-
+            return new Paged<LinkDto>(links,
+                totalNumberOfRecords,
+                request.PageSize,
+                request.Page);
         }
     }
 }

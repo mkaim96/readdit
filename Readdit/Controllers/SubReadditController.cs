@@ -53,7 +53,7 @@ namespace Readdit.Controllers
         [Route("{subReadditName}")]
         public async Task<IActionResult> GetLinks(string subReadditName, int page = 1)
         {
-            var pagedLinks = await mediator.Send(new GetPagedSubReadditLinks { Page = page, SubReadditName = subReadditName });
+            var pagedLinks = await mediator.Send(new GetPagedSubReadditLinks { Page = page, SubReadditName = subReadditName, PageSize = 2 });
             var subreaddit = await mediator.Send(new GetSubReadditByName { Name = subReadditName });
             var vm = new SubReadditViewModel
             {

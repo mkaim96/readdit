@@ -17,23 +17,22 @@ namespace Readdit.Infrastructure.Application.Links.Queries.GetLinksList
     {
         public string SubReadditName { get; set; }
         public int Page { get; set; }
+        public int PageSize { get; set; }
     }
 
     public class GetSubReadditLinksHandler : IRequestHandler<GetPagedSubReadditLinks, Paged<LinkDto>>
     {
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
-        int _take;
 
         public GetSubReadditLinksHandler(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
-            _take = 2;
         }
         public async Task<Paged<LinkDto>> Handle(GetPagedSubReadditLinks request, CancellationToken cancellationToken)
         {
-            int skip = (request.Page - 1) * _take;
+            int skip = (request.Page - 1) * request.PageSize;
             //var links = await _context.Links
             //    .Where(x => x.SubReaddit.Name == request.SubReadditName)
             //    .Select(x => new LinkDto
@@ -64,23 +63,17 @@ namespace Readdit.Infrastructure.Application.Links.Queries.GetLinksList
                 .ProjectTo<LinkDto>(_mapper.ConfigurationProvider)
                 .OrderByDescending(x => x.Ups - x.Downs)
                 .Skip(skip)
-                .Take(_take)
+                .Take(request.PageSize)
                 .ToListAsync();
 
             var totalNumberOfRecords = await _context.Links
                 .Where(x => x.SubReaddit.Name == request.SubReadditName)
                 .CountAsync();
 
-            var totalNumberOfPages = Math.Ceiling(totalNumberOfRecords / (float)_take);
-
-            return new Paged<LinkDto>
-            {
-                Items = links,
-                PageNumber = request.Page,
-                TotalNumberOfPages = (int)totalNumberOfPages,
-                TotalNumberOfRecords = totalNumberOfRecords,
-                PageSize = _take
-            };
+            return new Paged<LinkDto>(links,
+                totalNumberOfRecords,
+                request.PageSize,
+                request.Page);
         }
     }
 }
