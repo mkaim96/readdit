@@ -68,7 +68,7 @@ namespace Readdit.Tests
         }
 
         [Fact]
-        public async Task GetPagedSubreadditLinkListHandler_should_return_links_only_from_specified_subreaddit()
+        public async Task GetPagedCommunityLinkListHandler_should_return_links_only_from_specified_subreaddit()
         {
             var command = new GetPagedCommunityLinks { Page = 1, PageSize = 2, CommunityName = "test" };
             var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
