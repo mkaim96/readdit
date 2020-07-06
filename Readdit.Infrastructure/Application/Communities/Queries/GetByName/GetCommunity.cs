@@ -13,12 +13,12 @@ using System.Threading.Tasks;
 
 namespace Readdit.Infrastructure.Application.SubReaddits.Queries.GetByName
 {
-    public class GetSubReadditByName : IRequest<SubReadditDto>
+    public class GetCommunityByName : IRequest<CommunityDto>
     {
         public string Name { get; set; }
     }
 
-    public class GetSubReadditByNameHandler : IRequestHandler<GetSubReadditByName, SubReadditDto>
+    public class GetSubReadditByNameHandler : IRequestHandler<GetCommunityByName, CommunityDto>
     {
         private ApplicationDbContext _context;
         private IMapper _mapper;
@@ -29,15 +29,15 @@ namespace Readdit.Infrastructure.Application.SubReaddits.Queries.GetByName
             _mapper = mapper;
         }
 
-        public async Task<SubReadditDto> Handle(GetSubReadditByName request, CancellationToken cancellationToken)
+        public async Task<CommunityDto> Handle(GetCommunityByName request, CancellationToken cancellationToken)
         {
             if (String.IsNullOrEmpty(request.Name))
             {
                 throw new ArgumentNullException(nameof(request.Name));
             }
 
-            return await _context.SubReaddits
-                .ProjectTo<SubReadditDto>(_mapper.ConfigurationProvider)
+            return await _context.Communities
+                .ProjectTo<CommunityDto>(_mapper.ConfigurationProvider)
                 .FirstAsync(x => x.Name == request.Name);
                 
         }

@@ -1,11 +1,11 @@
-﻿@model Readdit.Models.SubReaddits.SubReadditViewModel
+﻿@model Readdit.Models.SubReaddits.CommunityViewModel
 @{
-    ViewData["Title"] = @Model.SubReaddit.Name;
-    ViewData["returnUrl"] = $"/sub/{Model.SubReaddit.Name}";
+    ViewData["Title"] = @Model.Community.Name;
+    ViewData["returnUrl"] = $"/c/{Model.Community.Name}";
     var previousPage = Model.PagedLinks.PageNumber - 1;
     var nextPage = Model.PagedLinks.PageNumber + 1;
-    var nextPageRoute = $"{Model.SubReaddit.Name}?page={nextPage}";
-    var previousPageRoute = $"{Model.SubReaddit.Name}?page={previousPage}";
+    var nextPageRoute = $"{Model.Community.Name}?page={nextPage}";
+    var previousPageRoute = $"{Model.Community.Name}?page={previousPage}";
 }
 
     <div class="box subreaddit-header">
@@ -13,14 +13,14 @@
         <div class="row">
 
             <div class="col-sm-auto">
-                <h3>@Model.SubReaddit.Description</h3>
+                <h3>@Model.Community.Description</h3>
             </div>
 
             <div class="col-sm d-flex align-items-center">
                 <a class="button no-decoration" 
                     asp-action="CreateLink"
-                    asp-controller="SubReaddit"
-                    asp-route-subReadditName="@Model.SubReaddit.Name">Submit a link</a>
+                    asp-controller="Communities"
+                    asp-route-communityName="@Model.Community.Name">Submit a link</a>
                 <a class="button no-decoration">Join</a>
             </div>
 
@@ -28,7 +28,7 @@
 
         <div class="row">
             <div class="col-sm-6">
-                <p>@Model.SubReaddit.Name</p>
+                <p>@Model.Community.Name</p>
             </div>
         </div>
     </div>

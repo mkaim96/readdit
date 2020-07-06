@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace Readdit.Infrastructure.Validators
 {
-    public class CreateSubReadditCommandValidator : AbstractValidator<CreateSubReadditCommand>
+    public class CreateCommunityCommandValidator : AbstractValidator<CreateCommunityCommand>
     {
-        private ISubReadditRepository _subReadditRepository;
+        private ICommunityRepository _communityRepository;
 
-        public CreateSubReadditCommandValidator(ISubReadditRepository subreadditRepository)
+        public CreateCommunityCommandValidator(ICommunityRepository communityRepository)
         {
-            _subReadditRepository = subreadditRepository;
+            _communityRepository = communityRepository;
 
             RuleFor(x => x.Description).NotEmpty().WithMessage("Description cannot empty");
             RuleFor(x => x.Name).NotEmpty().WithMessage("Description cannot empty");
@@ -25,7 +25,7 @@ namespace Readdit.Infrastructure.Validators
 
         private async Task<bool> IsNameUnique(string name)
         {
-            var exists = await _subReadditRepository.Exists(name);
+            var exists = await _communityRepository.Exists(name);
 
             return exists ? false : true;
         }

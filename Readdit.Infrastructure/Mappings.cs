@@ -19,7 +19,7 @@ namespace Readdit.Infrastructure
             CreateMap<Comment, CommentDto>()
                 .ForMember(dest => dest.Author, opt => opt.MapFrom(src => src.User.UserName));
 
-            CreateMap<SubReaddit, SubReadditDto>()
+            CreateMap<Community, CommunityDto>()
                 .ForMember(dest => dest.Author, opt => opt.MapFrom(src => src.User.UserName));
         }
     }

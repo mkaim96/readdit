@@ -14,27 +14,27 @@ namespace Readdit.Infrastructure.Application.SubReaddits.Commands.CreateLinkForS
         public ApplicationUser User { get; set; }
         public string Url { get; set; }
         public string Description { get; set; }
-        public string SubReadditName { get; set; }
+        public string CommunityName { get; set; }
     }
 
     public class CreateLinkHandler : IRequestHandler<CreateLinkCommand, int>
     {
         private ILinksRepository _linksRepository;
-        private ISubReadditRepository _subReadditRepository;
+        private ICommunityRepository _communityRepository;
 
-        public CreateLinkHandler(ILinksRepository linksRepository, ISubReadditRepository subreadditRepository)
+        public CreateLinkHandler(ILinksRepository linksRepository, ICommunityRepository communityRepository)
         {
             _linksRepository = linksRepository;
-            _subReadditRepository = subreadditRepository;
+            _communityRepository = communityRepository;
         }
         public async Task<int> Handle(CreateLinkCommand request, CancellationToken cancellationToken)
         {
-            if (!request.Url.StartsWith("http://") || request.Url.StartsWith("https://"))
+            if (!request.Url.StartsWith("http://") && !request.Url.StartsWith("https://"))
             {
                 request.Url = $"http://{request.Url}";
             }
 
-            var subreaddit = await _subReadditRepository.GetByName(request.SubReadditName);
+            var subreaddit = await _communityRepository.GetByName(request.CommunityName);
             var link = new Link(request.Url, request.Description, request.User, subreaddit);
 
             await _linksRepository.Add(link);

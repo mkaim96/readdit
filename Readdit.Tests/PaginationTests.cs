@@ -70,7 +70,7 @@ namespace Readdit.Tests
         [Fact]
         public async Task GetPagedSubreadditLinkListHandler_should_return_links_only_from_specified_subreaddit()
         {
-            var command = new GetPagedSubReadditLinks { Page = 1, PageSize = 2, SubReadditName = "test" };
+            var command = new GetPagedCommunityLinks { Page = 1, PageSize = 2, CommunityName = "test" };
             var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
             builder.UseInMemoryDatabase("TestDatabase");
 
@@ -80,7 +80,7 @@ namespace Readdit.Tests
                 var link = new Link
                 {
                     Id = 6,
-                    SubReaddit = new SubReaddit("test", new ApplicationUser(), "test subreddit")
+                    Community = new Community("test", new ApplicationUser(), "test subreddit")
                 };
 
                 context.Links.Add(link);

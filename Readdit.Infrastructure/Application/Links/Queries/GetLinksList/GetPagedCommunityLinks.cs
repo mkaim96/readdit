@@ -13,14 +13,14 @@ using System.Threading.Tasks;
 
 namespace Readdit.Infrastructure.Application.Links.Queries.GetLinksList
 {
-    public class GetPagedSubReadditLinks : IRequest<Paged<LinkDto>>
+    public class GetPagedCommunityLinks : IRequest<Paged<LinkDto>>
     {
-        public string SubReadditName { get; set; }
+        public string CommunityName { get; set; }
         public int Page { get; set; }
         public int PageSize { get; set; }
     }
 
-    public class GetSubReadditLinksHandler : IRequestHandler<GetPagedSubReadditLinks, Paged<LinkDto>>
+    public class GetSubReadditLinksHandler : IRequestHandler<GetPagedCommunityLinks, Paged<LinkDto>>
     {
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
@@ -30,7 +30,7 @@ namespace Readdit.Infrastructure.Application.Links.Queries.GetLinksList
             _context = context;
             _mapper = mapper;
         }
-        public async Task<Paged<LinkDto>> Handle(GetPagedSubReadditLinks request, CancellationToken cancellationToken)
+        public async Task<Paged<LinkDto>> Handle(GetPagedCommunityLinks request, CancellationToken cancellationToken)
         {
             int skip = (request.Page - 1) * request.PageSize;
             //var links = await _context.Links
@@ -59,7 +59,7 @@ namespace Readdit.Infrastructure.Application.Links.Queries.GetLinksList
 
             // using automapper
             var links = await _context.Links
-                .Where(x => x.SubReaddit.Name == request.SubReadditName)
+                .Where(x => x.Community.Name == request.CommunityName)
                 .ProjectTo<LinkDto>(_mapper.ConfigurationProvider)
                 .OrderByDescending(x => x.Ups - x.Downs)
                 .Skip(skip)
@@ -67,7 +67,7 @@ namespace Readdit.Infrastructure.Application.Links.Queries.GetLinksList
                 .ToListAsync();
 
             var totalNumberOfRecords = await _context.Links
-                .Where(x => x.SubReaddit.Name == request.SubReadditName)
+                .Where(x => x.Community.Name == request.CommunityName)
                 .CountAsync();
 
             return new Paged<LinkDto>(links,

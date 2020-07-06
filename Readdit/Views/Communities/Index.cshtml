@@ -8,22 +8,22 @@
 
         <div class="col-sm-6 box p-3 mr-1 d-table">
             <label>Search for communities: </label>
-            <form method="post" asp-action="SearchSubReaddits" asp-controller="SubReaddit" class="form-inline">
+            <form method="post" asp-action="SearchCommunities" asp-controller="Communities" class="form-inline">
                     <input class="form-control" name="search"/>
                     <button type="submit" class="btn btn-light ml-1">Search</button>
             </form>
-            <a asp-action="Create" asp-controller="SubReaddit">Create new community</a>
+            <a asp-action="Create" asp-controller="Communities">Create new community</a>
             @if (Model.SearchResults.Count != 0)
             {
                 <h6 class="mt-4">Search results</h6>
                 <ul class="list-group list-group-flush mt-4">
-                    @foreach (var sub in Model.SearchResults)
+                    @foreach (var com in Model.SearchResults)
                     {
                         <li class="list-group-item">
                             <a asp-action="GetLinks"
-                               asp-controller="SubReaddit"
-                               asp-route-subReadditName="@sub.Name">
-                                @sub.Name
+                               asp-controller="Communities"
+                               asp-route-communityName="@com.Name">
+                                @com.Name
                             </a>
                         </li>
                     }
@@ -34,16 +34,16 @@
         <div class="col-sm-5 box p-3 d-table">
             <h4>Popular</h4>
             <ol class="list-group">
-                @foreach(var sub in Model.Popular)
+                @foreach(var com in Model.Popular)
                 {
                     <li class="list-group-item">
                         <a asp-action="GetLinks"
-                           asp-controller="SubReaddit"
-                           asp-route-subReadditName="@sub.Name">
-                        @sub.Name</a>
+                           asp-controller="Communities"
+                           asp-route-communityName="@com.Name">
+                        @com.Name</a>
                     </li>
                 }
-            </ul>
+            </ol>
         </div>
     </div>
 </div>

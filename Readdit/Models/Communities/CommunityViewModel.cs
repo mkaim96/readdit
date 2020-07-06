@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Readdit.Models.SubReaddits
 {
-    public class SubReadditViewModel
+    public class CommunityViewModel
     {
         public Paged<LinkDto> PagedLinks { get; set; }
-        public SubReadditDto SubReaddit { get; set; }
+        public CommunityDto Community { get; set; }
     }
 }

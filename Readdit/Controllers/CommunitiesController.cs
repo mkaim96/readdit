@@ -20,21 +20,21 @@ using Readdit.Models.SubReaddits;
 
 namespace Readdit.Controllers
 {
-    [Route("sub")]
-    public class SubReadditController : ControllerBase
+    [Route("c")]
+    public class CommunitiesController : ControllerBase
     {
-        public SubReadditController(IMediator mediator, UserManager<ApplicationUser> um) : base(mediator, um)
+        public CommunitiesController(IMediator mediator, UserManager<ApplicationUser> um) : base(mediator, um)
         {
         }
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var popular = await mediator.Send(new GetPopularSubReaddits());
+            var popular = await mediator.Send(new GetPopularCommunities());
 
             var vm = new IndexViewModel
             {
-                Popular = popular, SearchResults = new List<SubReadditDto>().AsReadOnly() 
+                Popular = popular, SearchResults = new List<CommunityDto>().AsReadOnly() 
             };
 
             return View("Index", vm);
@@ -50,27 +50,27 @@ namespace Readdit.Controllers
         }
 
         [HttpGet]
-        [Route("{subReadditName}")]
-        public async Task<IActionResult> GetLinks(string subReadditName, int page = 1)
+        [Route("{communityName}")]
+        public async Task<IActionResult> GetLinks(string communityName, int page = 1)
         {
-            var pagedLinks = await mediator.Send(new GetPagedSubReadditLinks { Page = page, SubReadditName = subReadditName, PageSize = 2 });
-            var subreaddit = await mediator.Send(new GetSubReadditByName { Name = subReadditName });
-            var vm = new SubReadditViewModel
+            var pagedLinks = await mediator.Send(new GetPagedCommunityLinks { Page = page, CommunityName = communityName, PageSize = 2 });
+            var community = await mediator.Send(new GetCommunityByName { Name = communityName });
+            var vm = new CommunityViewModel
             {
-                SubReaddit = subreaddit,
+                Community = community,
                 PagedLinks = pagedLinks
             };
 
-            return View("SubReadditLinks", vm);
+            return View("CommunityLinks", vm);
         }
 
         [HttpPost]
-        public async Task<IActionResult>SearchSubReaddits(IFormCollection form)
+        public async Task<IActionResult>SearchCommunities(IFormCollection form)
         {
             var vm = new IndexViewModel
             {
-                Popular = await mediator.Send(new GetPopularSubReaddits()),
-                SearchResults = await mediator.Send(new SearchSubReaddits { SearchString = form["search"] })
+                Popular = await mediator.Send(new GetPopularCommunities()),
+                SearchResults = await mediator.Send(new SearchCommunities { SearchString = form["search"] })
             };
 
             return View(nameof(Index), vm);
@@ -86,7 +86,7 @@ namespace Readdit.Controllers
 
         [HttpPost]
         [Route("create")]
-        public async Task<IActionResult> Create(CreateSubReadditCommand request)
+        public async Task<IActionResult> Create(CreateCommunityCommand request)
         {
             if(!ModelState.IsValid)
             {
@@ -96,7 +96,7 @@ namespace Readdit.Controllers
             request.User = await userManager.GetUserAsync(HttpContext.User);
             await mediator.Send(request);
 
-            return RedirectToAction("GetLinks", new { subReadditName = request.Name });
+            return RedirectToAction("GetLinks", new { communityName = request.Name });
         }
         #endregion
 
@@ -104,16 +104,16 @@ namespace Readdit.Controllers
 
         [Authorize]
         [HttpGet]
-        [Route("{subReadditName}/submit-link")]
-        public IActionResult CreateLink(string subReadditName)
+        [Route("{communityName}/submit-link")]
+        public IActionResult CreateLink(string communityName)
         {
-            var model = new CreateLinkCommand { SubReadditName = subReadditName };
+            var model = new CreateLinkCommand { CommunityName = communityName };
             return View(model);
         }
 
         [HttpPost]
-        [Route("{subReadditName}/submit-link")]
-        public async Task<ActionResult> CreateLink(CreateLinkCommand request, string subReadditName)
+        [Route("{communityName}/submit-link")]
+        public async Task<ActionResult> CreateLink(CreateLinkCommand request, string communityName)
         {
 
             if (!ModelState.IsValid)
@@ -121,11 +121,11 @@ namespace Readdit.Controllers
                 return View();
             }
 
-            request.SubReadditName = subReadditName;
+            request.CommunityName = communityName;
             request.User = await userManager.GetUserAsync(HttpContext.User);
             await mediator.Send(request);
 
-            return RedirectToAction("GetLinks", new { subReadditName }); 
+            return RedirectToAction("GetLinks", new { communityName }); 
         }
 
         #endregion

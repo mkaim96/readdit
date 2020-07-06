@@ -35,13 +35,13 @@
                             at @Model.CreatedAt.ToString("dd.MM.yyyy")
                         </span>
 
-                        @if (Model.SubReaddit != null)
+                        @if (Model.Community != null)
                         {
                             <span> | Community: 
                                 <a asp-action="GetLinks"
-                                asp-controller="SubReaddit"
-                                asp-route-subReadditName="@Model.SubReaddit.Name">
-                                @Model.SubReaddit.Name
+                                asp-controller="Communities"
+                                asp-route-communityName="@Model.Community.Name">
+                                @Model.Community.Name
                                 </a>
                             </span>
                         }

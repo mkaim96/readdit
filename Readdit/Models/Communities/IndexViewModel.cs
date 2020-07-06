@@ -8,8 +8,8 @@ namespace Readdit.Models.SubReaddits
 {
     public class IndexViewModel
     {
-        public IReadOnlyCollection<SubReadditDto> SearchResults { get; set; }
-        public IReadOnlyCollection<SubReadditDto> Popular { get; set; }
+        public IReadOnlyCollection<CommunityDto> SearchResults { get; set; }
+        public IReadOnlyCollection<CommunityDto> Popular { get; set; }
 
     }
 }

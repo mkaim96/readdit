@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Readdit.Domain.Models
 {
-    public class SubReaddit
+    public class Community
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -12,7 +12,7 @@ namespace Readdit.Domain.Models
         public ApplicationUser User { get; set; }
         public string  Description { get; set; }
 
-        public SubReaddit(string name, ApplicationUser user, string description)
+        public Community(string name, ApplicationUser user, string description)
         {
             Name = name;
             User = user;
@@ -20,7 +20,7 @@ namespace Readdit.Domain.Models
             Description = description;
         }
 
-        private SubReaddit()
+        private Community()
         {
         }
     }

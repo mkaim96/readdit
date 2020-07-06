@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Readdit.Infrastructure.Dto
 {
-    public class SubReadditDto
+    public class CommunityDto
     {
         public int Id { get; set; }
         public string Name { get; set; }

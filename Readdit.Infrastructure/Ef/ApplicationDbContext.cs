@@ -17,7 +17,7 @@ namespace Readdit.Infrastructure.Ef
         public DbSet<Link> Links { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Vote> Votes { get; set; }
-        public DbSet<SubReaddit> SubReaddits { get; set; }
+        public DbSet<Community> Communities { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder) 
         {

@@ -6,9 +6,9 @@ using System.Text;
 
 namespace Readdit.Infrastructure.Validators
 {
-    public class CreateLinkForSubReadditCommandValidator : AbstractValidator<CreateLinkCommand>
+    public class CreateLinkForCommunityCommandValidator : AbstractValidator<CreateLinkCommand>
     {
-        public CreateLinkForSubReadditCommandValidator()
+        public CreateLinkForCommunityCommandValidator()
         {
             RuleFor(x => x.Url).NotEmpty().WithMessage("Url cannot be empty");
             RuleFor(x => x.Description).NotEmpty().WithMessage("Description cannot be empty");

@@ -5,9 +5,9 @@
 }
 
 <div class="box">
-    <h5 class="page-header">Submit a link for <i>@Model.SubReadditName</i> community</h5>
+    <h5 class="page-header">Submit a link for <i>@Model.CommunityName</i> community</h5>
 
-        <form method="post" asp-action="CreateLink" asp-controller="SubReaddit">
+        <form method="post" asp-action="CreateLink" asp-controller="Communities">
         <div class="form-group">
             <label asp-for="@Model.Url"></label>
             <span class="badge badge-danger" asp-validation-for="@Model.Url"></span>
