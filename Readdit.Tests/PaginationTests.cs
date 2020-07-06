@@ -87,7 +87,7 @@ namespace Readdit.Tests
 
                 context.SaveChanges();
 
-                var handler = new GetSubReadditLinksHandler(context, Mapper);
+                var handler = new GetCommunityLinksHandler(context, Mapper);
                 var result = await handler.Handle(command, new CancellationToken());
 
                 Assert.Single(result.Items);

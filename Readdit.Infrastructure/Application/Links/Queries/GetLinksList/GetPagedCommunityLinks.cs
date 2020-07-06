@@ -20,12 +20,12 @@ namespace Readdit.Infrastructure.Application.Links.Queries.GetLinksList
         public int PageSize { get; set; }
     }
 
-    public class GetSubReadditLinksHandler : IRequestHandler<GetPagedCommunityLinks, Paged<LinkDto>>
+    public class GetCommunityLinksHandler : IRequestHandler<GetPagedCommunityLinks, Paged<LinkDto>>
     {
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
 
-        public GetSubReadditLinksHandler(ApplicationDbContext context, IMapper mapper)
+        public GetCommunityLinksHandler(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
