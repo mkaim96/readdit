@@ -8,5 +8,6 @@ namespace Readdit.Domain.Models
     public class ApplicationUser : IdentityUser
     {
         public IEnumerable<Link> Links { get; set; }
+        public IEnumerable<Community> JoinedCommunities { get; set; }
     }
 }
