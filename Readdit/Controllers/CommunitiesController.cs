@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Readdit.Domain.Models;
+using Readdit.Infrastructure.Application.Communities.Commands.JoinCommunity;
 using Readdit.Infrastructure.Application.Links.Queries.GetLink;
 using Readdit.Infrastructure.Application.Links.Queries.GetLinksList;
 using Readdit.Infrastructure.Application.SubReaddit.Queries.GetPopular;
@@ -129,5 +130,16 @@ namespace Readdit.Controllers
         }
 
         #endregion
+
+        [HttpGet]
+        [Route("join/{communityName}")]
+        public async Task<IActionResult> Join(string communityName)
+        {
+            var user = await userManager.GetUserAsync(HttpContext.User);
+
+            await mediator.Send(new JoinCommunityCommand { CommunityName = communityName, User = user });
+
+            return RedirectToAction("GetLinks", new { communityName });
+        }
     }
 }

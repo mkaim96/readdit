@@ -42,6 +42,12 @@ namespace Readdit.Infrastructure.Repositories
             return await _context.Communities.ToListAsync();
         }
 
+        public async Task Join(ApplicationUser user, Community community)
+        {
+            _context.UserCommunity.Add(new UserCommunity() { Community = community, User = user });
+            await _context.SaveChangesAsync();
+        }
+
         public async Task<IReadOnlyCollection<Community>> Search(string search)
         {
             return await _context.Communities

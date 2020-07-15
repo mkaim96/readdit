@@ -9,6 +9,7 @@ namespace Readdit.Domain.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public IEnumerable<Link> Links { get; set; }
+        public IEnumerable<UserCommunity> UserCommunity { get; set; }
         public ApplicationUser User { get; set; }
         public string  Description { get; set; }
 

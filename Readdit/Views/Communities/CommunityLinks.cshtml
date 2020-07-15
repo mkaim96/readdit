@@ -21,7 +21,10 @@
                     asp-action="CreateLink"
                     asp-controller="Communities"
                     asp-route-communityName="@Model.Community.Name">Submit a link</a>
-                <a class="button no-decoration">Join</a>
+                <a class="button no-decoration"
+                   asp-action="Join"
+                   asp-controller="Communities"
+                   asp-route-communityName="@Model.Community.Name">Join</a>
             </div>
 
         </div>

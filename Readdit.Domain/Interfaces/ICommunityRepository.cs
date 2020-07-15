@@ -13,5 +13,6 @@ namespace Readdit.Domain.Interfaces
         Task<Community> Add(Community community);
         Task<Community> GetByName(string name);
         Task<bool> Exists(string name);
+        Task Join(ApplicationUser user, Community community);
     }
 }
