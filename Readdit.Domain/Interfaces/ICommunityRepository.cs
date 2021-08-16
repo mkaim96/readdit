@@ -14,5 +14,7 @@ namespace Readdit.Domain.Interfaces
         Task<Community> GetByName(string name);
         Task<bool> Exists(string name);
         Task Join(ApplicationUser user, Community community);
+        Task Unsubscribe(ApplicationUser user, Community community);
+        Task<bool> IsUserSubscribed(ApplicationUser user, Community community);
     }
 }

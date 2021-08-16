@@ -17,14 +17,26 @@
             </div>
 
             <div class="col-sm d-flex align-items-center">
-                <a class="button no-decoration" 
-                    asp-action="CreateLink"
-                    asp-controller="Communities"
-                    asp-route-communityName="@Model.Community.Name">Submit a link</a>
                 <a class="button no-decoration"
-                   asp-action="Join"
+                   asp-action="CreateLink"
                    asp-controller="Communities"
-                   asp-route-communityName="@Model.Community.Name">Join</a>
+                   asp-route-communityName="@Model.Community.Name">Submit a link</a>
+
+                @if (Model.IsCurrentUserSubscribed)
+                {
+                    <a class="button no-decoration"
+                       asp-action="Leave"
+                       asp-controller="Communities"
+                       asp-route-communityName="@Model.Community.Name">Leave</a>
+                }
+                else
+                {
+                    <a class="button no-decoration"
+                       asp-action="Join"
+                       asp-controller="Communities"
+                       asp-route-communityName="@Model.Community.Name">Join</a>
+                }
+
             </div>
 
         </div>

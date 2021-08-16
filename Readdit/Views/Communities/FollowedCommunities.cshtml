@@ -1,0 +1,32 @@
+﻿@model Readdit.Infrastructure.Paged<Readdit.Infrastructure.Dto.LinkDto>
+@{ 
+    var previousPageRoute = $"my-communities?page={Model.PageNumber - 1}";
+    var nextPageRoute = $"my-communities?page={Model.PageNumber + 1}";
+}
+
+<div class="text-center">
+    @foreach (var link in Model.Items)
+    {
+        <partial name="_linkPartial" , model="@link" />
+    }
+</div>
+
+<div class="row d-flex justify-content-center">
+    @if (Model.PageNumber == 1)
+    {
+        <a class="disabled pagination-link">&laquo;Back</a>
+    }
+    else
+    {
+        <a class="pagination-link" href="@previousPageRoute">&laquo;Back</a>
+    }
+
+    @if (Model.PageNumber >= Model.TotalNumberOfPages)
+    {
+        <a class="disabled pagination-link">Next&raquo;</a>
+    }
+    else
+    {
+        <a class="pagination-link" href="@nextPageRoute">Next&raquo;</a>
+    }
+</div>

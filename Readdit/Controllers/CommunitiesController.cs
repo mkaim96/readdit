@@ -9,6 +9,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Readdit.Domain.Models;
 using Readdit.Infrastructure.Application.Communities.Commands.JoinCommunity;
+using Readdit.Infrastructure.Application.Communities.Commands.UnsubscribeFromCommunity;
+using Readdit.Infrastructure.Application.Communities.Queries.GetLinksFromFollwed;
+using Readdit.Infrastructure.Application.Communities.Queries.IsUserSubscribed;
 using Readdit.Infrastructure.Application.Links.Queries.GetLink;
 using Readdit.Infrastructure.Application.Links.Queries.GetLinksList;
 using Readdit.Infrastructure.Application.SubReaddit.Queries.GetPopular;
@@ -54,12 +57,15 @@ namespace Readdit.Controllers
         [Route("{communityName}")]
         public async Task<IActionResult> GetLinks(string communityName, int page = 1)
         {
+            var user = await userManager.GetUserAsync(HttpContext.User);
             var pagedLinks = await mediator.Send(new GetPagedCommunityLinks { Page = page, CommunityName = communityName, PageSize = 2 });
             var community = await mediator.Send(new GetCommunityByName { Name = communityName });
+            var isUserSubed = await mediator.Send(new IsUserSubscribed { CommunityName = communityName, User = user });
             var vm = new CommunityViewModel
             {
                 Community = community,
-                PagedLinks = pagedLinks
+                PagedLinks = pagedLinks,
+                IsCurrentUserSubscribed = isUserSubed
             };
 
             return View("CommunityLinks", vm);
@@ -140,6 +146,23 @@ namespace Readdit.Controllers
             await mediator.Send(new JoinCommunityCommand { CommunityName = communityName, User = user });
 
             return RedirectToAction("GetLinks", new { communityName });
+        }
+
+        [HttpGet]
+        [Route("leave/{communityName}")]
+        public async Task<IActionResult> Leave(string communityName)
+        {
+            var user = await userManager.GetUserAsync(HttpContext.User);
+            await mediator.Send(new UnsubscribeFromCommunity { CommunityName = communityName, User = user });
+            return RedirectToAction("Index", "Home");
+        }
+
+        [Route("/my-communities")]
+        public async Task<ActionResult> GetLinksFromFollowedCommunities(int page = 1)
+        {
+            var user = await userManager.GetUserAsync(HttpContext.User);
+            var links = await mediator.Send(new GetLinksFromFollwedCommunities { User = user, PageSize = 2, PageNumber = page });
+            return View("FollowedCommunities", links);
         }
     }
 }

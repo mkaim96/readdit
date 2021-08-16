@@ -42,6 +42,11 @@ namespace Readdit.Infrastructure.Repositories
             return await _context.Communities.ToListAsync();
         }
 
+        public async Task<bool> IsUserSubscribed(ApplicationUser user, Community community)
+        {
+            return await _context.UserCommunity.AnyAsync(x => x.Community == community && x.User == user);
+        }
+
         public async Task Join(ApplicationUser user, Community community)
         {
             _context.UserCommunity.Add(new UserCommunity() { Community = community, User = user });
@@ -53,6 +58,13 @@ namespace Readdit.Infrastructure.Repositories
             return await _context.Communities
                 .Where(x => x.Name.ToLower().Contains(search.ToLower()))
                 .ToListAsync();
+        }
+
+        public async Task Unsubscribe(ApplicationUser user, Community community)
+        {
+            var usercomm = await _context.UserCommunity.FirstAsync(x => x.Community == community && x.User == user);
+            _context.UserCommunity.Remove(usercomm);
+            await _context.SaveChangesAsync();
         }
     }
 }

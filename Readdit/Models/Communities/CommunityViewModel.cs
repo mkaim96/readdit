@@ -11,5 +11,6 @@ namespace Readdit.Models.SubReaddits
     {
         public Paged<LinkDto> PagedLinks { get; set; }
         public CommunityDto Community { get; set; }
+        public bool IsCurrentUserSubscribed { get; set; }
     }
 }
